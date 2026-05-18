@@ -73,12 +73,15 @@
     }
     .skip-link:focus { top: 0; }
 
-    :focus-visible {
-      outline: 2px solid var(--gold);
-      outline-offset: 3px;
-    }
+    :focus-visible { outline: 2px solid rgba(245,197,24,0.6); outline-offset: 3px; }
 
     .no-scroll { overflow: hidden; }
+
+    ::selection { background: rgba(245,197,24,0.3); color: #0A0A0A; }
+
+    ::-webkit-scrollbar       { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--cream); }
+    ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
 
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
@@ -111,7 +114,7 @@
       --section-pad-sm: 4rem 1.5rem;
       --container:      1200px;
 
-      --radius-card: 12px;
+      --radius-card: 16px;
       --radius-btn:  6px;
       --radius-pill: 99px;
 
@@ -160,25 +163,9 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    @keyframes typewriter {
-      from { width: 0; }
-      to   { width: 100%; }
-    }
-
-    @keyframes stampReveal {
-      0%   { opacity: 0; transform: scale(1.4) rotate(-15deg); }
-      60%  { opacity: 1; transform: scale(0.95) rotate(-3deg); }
-      100% { opacity: 1; transform: scale(1) rotate(-3deg); }
-    }
-
     @keyframes pulse {
       0%, 100% { opacity: 1; transform: scale(1); }
       50%       { opacity: 0.6; transform: scale(0.85); }
-    }
-
-    @keyframes countUp {
-      from { opacity: 0; }
-      to   { opacity: 1; }
     }
 
     @keyframes wordReveal {
@@ -189,6 +176,37 @@
     @keyframes navSlideDown {
       from { transform: translateY(-100%); opacity: 0; }
       to   { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes proofFadeIn {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes shimmer {
+      0%   { background-position: -200% center; }
+      100% { background-position:  200% center; }
+    }
+
+    @keyframes maxEntrance {
+      from { opacity: 0; transform: translateX(20px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes stampReveal {
+      0%   { opacity: 0; transform: scale(1.4) rotate(-15deg); }
+      60%  { opacity: 1; transform: scale(0.95) rotate(-3deg); }
+      100% { opacity: 1; transform: scale(1) rotate(-3deg); }
+    }
+
+    @keyframes heroReveal {
+      from { opacity: 0; transform: translateY(20px); filter: blur(4px); }
+      to   { opacity: 1; transform: translateY(0);    filter: blur(0); }
+    }
+
+    @keyframes wa-pulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.7; }
     }
 
     /* ═══════════════════════════════════════
@@ -330,7 +348,7 @@
     .btn-secondary {
       background: transparent;
       color: var(--cream);
-      border-color: rgba(250,246,237,0.4);
+      border-color: rgba(250,246,237,0.25);
     }
     .btn-secondary:hover, .btn-secondary:focus-visible {
       background: var(--gold);
@@ -382,17 +400,18 @@
       align-items: center;
       justify-content: space-between;
       background: transparent;
-      transition: background var(--transition), backdrop-filter var(--transition),
-                  padding var(--transition), box-shadow var(--transition);
+      transition: background var(--transition), box-shadow var(--transition),
+                  padding var(--transition), border-color var(--transition);
       animation: navSlideDown 0.6s ease-out both;
     }
 
     .nav.scrolled {
-      background: rgba(10,10,10,0.92);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      background: #FAF6ED;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
       padding: 0.85rem 2rem;
-      border-bottom: 1px solid rgba(245,197,24,0.3);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+      border-bottom: 1px solid rgba(0,0,0,0.05);
     }
 
     .nav-logo {
@@ -401,9 +420,12 @@
       letter-spacing: 0.02em;
       color: var(--cream);
       flex-shrink: 0;
+      transition: color var(--transition);
     }
-    .nav-logo .logo-tax    { color: var(--gold); text-decoration: underline; text-decoration-color: rgba(245,197,24,0.55); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    .nav-logo .logo-tax    { color: var(--gold); }
     .nav-logo .logo-degree { color: var(--gold); }
+
+    .nav.scrolled .nav-logo { color: var(--black); }
 
     .nav-links {
       display: flex;
@@ -412,12 +434,12 @@
     }
 
     .nav-links a {
-      font-family: var(--font-mono);
-      font-size: 0.6rem;
+      font-family: var(--font-body);
+      font-size: 0.78rem;
       font-weight: 500;
-      letter-spacing: 0.3em;
+      letter-spacing: 0.25em;
       text-transform: uppercase;
-      color: rgba(250,246,237,0.6);
+      color: rgba(250,246,237,0.7);
       position: relative;
       transition: color var(--transition);
     }
@@ -433,6 +455,10 @@
     .nav-links a:focus-visible { color: var(--cream); }
     .nav-links a:hover::after,
     .nav-links a:focus-visible::after { width: 100%; }
+
+    .nav.scrolled .nav-links a { color: rgba(10,10,10,0.55); }
+    .nav.scrolled .nav-links a:hover,
+    .nav.scrolled .nav-links a:focus-visible { color: var(--black); }
 
     .nav-cta {
       display: inline-flex;
@@ -451,6 +477,7 @@
       transition: background var(--transition);
     }
     .nav-cta:hover, .nav-cta:focus-visible { background: var(--gold-deep); }
+    .nav-cta svg { animation: wa-pulse 2s ease-in-out infinite; }
 
     /* Hamburger */
     .hamburger {
@@ -469,9 +496,10 @@
       width: 22px;
       height: 1.5px;
       background: var(--cream);
-      transition: transform var(--transition), opacity var(--transition);
+      transition: transform var(--transition), opacity var(--transition), background var(--transition);
       display: block;
     }
+    .nav.scrolled .hamburger-line { background: var(--black); }
     .hamburger.open .hamburger-line:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
     .hamburger.open .hamburger-line:nth-child(2) { opacity: 0; transform: scaleX(0); }
     .hamburger.open .hamburger-line:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
@@ -550,42 +578,38 @@
     .hero {
       position: relative;
       min-height: 100vh;
-      background: var(--black);
-      display: flex;
-      flex-direction: column;
+      background: #0F0F0F;
       overflow: hidden;
     }
 
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
-    }
-    .hero-bg::after {
+    /* Grain texture overlay */
+    .hero::after {
       content: '';
       position: absolute;
       inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-      opacity: 0.25;
-    }
-
-    .hero-glow {
-      position: absolute;
-      bottom: -100px; right: -100px;
-      width: 500px; height: 500px;
-      background: radial-gradient(circle, rgba(245,197,24,0.06) 0%, transparent 70%);
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
       pointer-events: none;
-      z-index: 0;
+      z-index: 1;
+      opacity: 0.35;
     }
 
+    /* Radial gold glow layer */
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 70% 50%, rgba(245,197,24,0.06) 0%, transparent 60%);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* Ghost "360°" watermark */
     .hero-watermark {
       position: absolute;
-      bottom: -2rem; left: -1rem;
+      bottom: -5%;
+      right: -2%;
       font-family: var(--font-display);
-      font-size: clamp(8rem, 18vw, 16rem);
-      color: rgba(250,246,237,0.025);
-      letter-spacing: 0.05em;
+      font-size: clamp(20rem, 35vw, 38rem);
+      color: rgba(255,255,255,0.018);
       line-height: 1;
       pointer-events: none;
       user-select: none;
@@ -596,57 +620,73 @@
     .hero-inner {
       position: relative;
       z-index: var(--z-base);
-      flex: 1;
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 52% 48%;
       gap: 2rem;
       align-items: center;
+      min-height: 100vh;
       max-width: var(--container);
       margin: 0 auto;
       padding: calc(80px + 4rem) 2rem 4rem;
       width: 100%;
     }
 
-    .hero-left  { display: flex; flex-direction: column; gap: 0; }
-    .hero-right {
-      position: relative;
+    /* ── Hero Left ── */
+    .hero-left {
       display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      min-height: 420px;
+      flex-direction: column;
     }
 
-    /* Eyebrow */
     .hero-eyebrow {
       font-family: var(--font-mono);
-      font-size: 0.55rem;
+      font-size: 0.6rem;
       font-weight: 500;
-      letter-spacing: 0.3em;
+      letter-spacing: 0.35em;
       text-transform: uppercase;
-      color: var(--gold);
+      color: rgba(245,197,24,0.7);
       display: block;
-      margin-bottom: 1rem;
+      margin-bottom: 1.25rem;
     }
-    .hero-eyebrow::before { display: none; }
 
-    /* H1 */
-    .hero-h1  { display: flex; flex-direction: column; gap: 0.05em; }
+    .hero-h1 {
+      display: flex;
+      flex-direction: column;
+    }
 
     .hero-h1-line1 {
       font-family: var(--font-display);
-      font-size: clamp(3.5rem, 7vw, 6rem);
-      line-height: 0.92;
+      font-size: clamp(4.5rem, 8.5vw, 7.5rem);
+      line-height: 0.9;
       letter-spacing: 0.01em;
       text-transform: uppercase;
       color: var(--cream);
     }
 
+    .hero-h1-b1 {
+      font-family: var(--font-display);
+      font-size: clamp(4.5rem, 8.5vw, 7.5rem);
+      line-height: 0.9;
+      letter-spacing: 0.01em;
+      text-transform: uppercase;
+      color: var(--cream);
+      animation: wordReveal 0.6s ease-out 0.16s both;
+    }
+
+    .hero-h1-sep {
+      display: block;
+      width: 60px;
+      height: 1px;
+      background: rgba(245,197,24,0.4);
+      margin: 1rem 0;
+    }
+
     .hero-h1-line2 {
       font-family: var(--font-serif);
       font-style: italic;
-      font-size: clamp(2.2rem, 5vw, 4.2rem);
-      line-height: 1.05;
+      font-size: clamp(2.2rem, 4.5vw, 4rem);
+      line-height: 1.1;
       color: var(--gold);
+      text-transform: none;
     }
 
     .hero-h1-line1 .word,
@@ -658,41 +698,37 @@
       animation: wordReveal 0.6s ease-out forwards;
     }
 
-    /* Sub */
     .hero-sub {
       font-family: var(--font-body);
       font-weight: 300;
       font-size: 1rem;
-      line-height: 1.75;
-      color: rgba(250,246,237,0.6);
-      max-width: 420px;
-      margin-top: 1.75rem;
-      margin-bottom: 0;
+      line-height: 1.65;
+      color: rgba(250,246,237,0.55);
+      max-width: 400px;
+      margin-top: 1.5rem;
     }
 
-    /* Badges */
     .hero-badges {
       display: flex;
       align-items: center;
       gap: 0.5rem;
       flex-wrap: wrap;
       margin-top: 1.5rem;
-      margin-bottom: 0;
     }
 
     .badge-pill {
       display: inline-flex;
       align-items: center;
       gap: 0.35rem;
-      padding: 0.3rem 0.9rem;
-      border: 1px solid rgba(245,197,24,0.25);
+      padding: 0.28rem 0.85rem;
+      border: 1px solid rgba(245,197,24,0.2);
       border-radius: var(--radius-pill);
       font-family: var(--font-mono);
-      font-size: 0.52rem;
+      font-size: 0.5rem;
       font-weight: 500;
       letter-spacing: 0.15em;
       text-transform: uppercase;
-      color: rgba(250,246,237,0.5);
+      color: rgba(250,246,237,0.45);
     }
 
     .badge-pill-dot {
@@ -702,23 +738,20 @@
       flex-shrink: 0;
     }
 
-    /* CTAs */
     .hero-ctas {
       display: flex;
       align-items: center;
       gap: 1rem;
       flex-wrap: wrap;
       margin-top: 2rem;
-      margin-bottom: 0;
     }
 
-    /* Urgency */
     .hero-urgency {
       display: flex;
       align-items: center;
       gap: 0.5rem;
       font-family: var(--font-body);
-      font-size: 0.78rem;
+      font-size: 0.75rem;
       color: rgba(250,246,237,0.4);
       margin-top: 1.25rem;
     }
@@ -726,107 +759,281 @@
     .urgency-dot {
       width: 7px; height: 7px;
       border-radius: 50%;
-      background: #4ade80;
+      background: #22C55E;
       flex-shrink: 0;
       animation: pulse 2s ease-in-out infinite;
     }
 
-    /* Parallax layer */
-    .hero-parallax-bg {
-      position: absolute;
-      inset: 0;
-      will-change: transform;
+    /* ── Hero Right — Social Proof Stack ── */
+    .hero-right {
+      position: relative;
+      min-height: 460px;
+      display: flex;
+      align-items: stretch;
     }
 
-    /* Scroll document */
-    .scroll-document {
+    .proof-stack {
       position: relative;
       width: 100%;
-      max-width: 360px;
-      background: rgba(255,255,255,0.04);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(245,197,24,0.2);
+      min-height: 460px;
+    }
+
+    /* Base card */
+    .proof-card {
+      position: absolute;
+    }
+
+    /* Card 1: LLC Approval */
+    .proof-card-llc {
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%) rotate(-3deg);
+      width: 280px;
+      background: linear-gradient(135deg, #1A1A2E 0%, #16213E 100%);
+      border: 1px solid rgba(245,197,24,0.3);
       border-radius: 16px;
-      padding: 2.5rem;
-      transform: rotate(-1.5deg) translateY(40px);
-      transform-origin: center bottom;
+      padding: 1.5rem;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      z-index: 1;
       opacity: 0;
-      box-shadow: 0 40px 80px rgba(0,0,0,0.4), 0 0 0 1px rgba(245,197,24,0.08);
-      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-      margin-left: -40px;
-    }
-    .scroll-document.visible { opacity: 1; }
-
-    .doc-header {
-      display: flex;
-      flex-direction: column;
-      gap: 0.25rem;
-      margin-bottom: 1.5rem;
-      padding-bottom: 1rem;
-      border-bottom: 1px solid rgba(245,197,24,0.12);
+      animation: proofFadeIn 0.7s ease-out 0.3s forwards;
     }
 
-    .doc-header-title {
+    .proof-llc-agency {
       font-family: var(--font-mono);
-      font-size: 0.5rem;
-      font-weight: 500;
+      font-size: 0.45rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--gold);
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 0.3rem;
     }
 
-    .doc-header-sub {
+    .proof-llc-title {
       font-family: var(--font-display);
-      font-size: 1rem;
+      font-size: 1.4rem;
+      letter-spacing: 0.04em;
       color: var(--cream);
-      letter-spacing: 0.05em;
+      margin-bottom: 0.75rem;
     }
 
-    .doc-field {
+    .proof-llc-divider {
+      height: 1px;
+      background: rgba(245,197,24,0.25);
+      margin-bottom: 0.75rem;
+    }
+
+    .proof-llc-field {
       display: flex;
       flex-direction: column;
-      gap: 0.2rem;
-      margin-bottom: 1rem;
+      gap: 0.1rem;
+      margin-bottom: 0.6rem;
     }
 
-    .doc-field-label {
+    .proof-llc-label {
+      font-family: var(--font-mono);
+      font-size: 0.42rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.28);
+    }
+
+    .proof-llc-value {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--cream);
+    }
+
+    .proof-llc-approved {
+      display: inline-block;
+      margin-top: 0.4rem;
+      padding: 0.22rem 0.6rem;
+      background: rgba(34,197,94,0.15);
+      border: 1px solid rgba(34,197,94,0.4);
+      border-radius: 4px;
       font-family: var(--font-mono);
       font-size: 0.48rem;
-      font-weight: 500;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: rgba(250,246,237,0.35);
-    }
-
-    .doc-field-value {
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      color: var(--cream);
-      overflow: hidden;
-      white-space: nowrap;
-      width: 0;
-    }
-    .doc-field.typed .doc-field-value {
-      width: 100%;
-      transition: width 0.6s steps(20,end);
-    }
-
-    .doc-stamp {
-      position: absolute;
-      top: 1.5rem; right: 1.5rem;
-      padding: 0.4rem 0.75rem;
-      border: 2px solid var(--gold);
-      border-radius: 4px;
-      font-family: var(--font-display);
-      font-size: 0.9rem;
       letter-spacing: 0.15em;
-      color: var(--gold);
-      opacity: 0;
-      transform: scale(1.4) rotate(-15deg);
+      color: #22C55E;
     }
-    .doc-stamp.visible {
-      animation: stampReveal 0.5s cubic-bezier(0.175,0.885,0.32,1.275) forwards;
+
+    /* Card 2: Tax Refund */
+    .proof-card-tax {
+      top: 40px;
+      left: 50%;
+      transform: translateX(-55%) rotate(2deg);
+      width: 260px;
+      background: #FAF6ED;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+      z-index: 2;
+      opacity: 0;
+      animation: proofFadeIn 0.7s ease-out 0.5s forwards;
+    }
+
+    .proof-tax-agency {
+      font-family: var(--font-mono);
+      font-size: 0.45rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,0.4);
+      margin-bottom: 0.2rem;
+    }
+
+    .proof-tax-label-title {
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 0.7rem;
+      color: #2A2A2A;
+      margin-bottom: 0.15rem;
+    }
+
+    .proof-tax-amount {
+      font-family: var(--font-display);
+      font-size: 2.8rem;
+      line-height: 1;
+      color: var(--gold);
+      margin-bottom: 0.1rem;
+    }
+
+    .proof-tax-sub {
+      font-family: var(--font-mono);
+      font-size: 0.45rem;
+      letter-spacing: 0.1em;
+      color: rgba(0,0,0,0.38);
+      margin-bottom: 0.75rem;
+    }
+
+    .proof-tax-sep {
+      height: 1px;
+      background: rgba(0,0,0,0.08);
+      margin-bottom: 0.6rem;
+    }
+
+    .proof-tax-row {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 0.5rem;
+      color: rgba(0,0,0,0.5);
+      margin-bottom: 0.35rem;
+    }
+
+    .proof-tax-status {
+      display: inline-block;
+      margin-top: 0.5rem;
+      padding: 0.22rem 0.6rem;
+      background: rgba(34,197,94,0.1);
+      color: #15803d;
+      font-family: var(--font-mono);
+      font-size: 0.48rem;
+      letter-spacing: 0.1em;
+      border-radius: 99px;
+    }
+
+    /* Card 3: WhatsApp Chat */
+    .proof-card-chat {
+      top: 0;
+      left: 50%;
+      transform: translateX(-30%);
+      width: 240px;
+      background: #FFFFFF;
+      border-radius: 16px;
+      padding: 1.25rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      z-index: 3;
+      opacity: 0;
+      animation: proofFadeIn 0.7s ease-out 0.7s forwards;
+    }
+
+    .proof-chat-header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .proof-chat-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #25D366;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .proof-chat-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.08rem;
+    }
+
+    .proof-chat-name {
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 0.75rem;
+      color: #0A0A0A;
+      line-height: 1.2;
+    }
+
+    .proof-chat-online {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-family: var(--font-mono);
+      font-size: 0.48rem;
+      letter-spacing: 0.08em;
+      color: #25D366;
+    }
+
+    .proof-chat-online-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #25D366;
+      flex-shrink: 0;
+    }
+
+    .proof-chat-sep {
+      height: 1px;
+      background: rgba(0,0,0,0.06);
+      margin-bottom: 0.75rem;
+    }
+
+    .proof-chat-bubble {
+      padding: 0.5rem 0.75rem;
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      line-height: 1.4;
+      margin-bottom: 0.4rem;
+      display: block;
+      max-width: 90%;
+    }
+
+    .proof-chat-user {
+      background: #F0F0F0;
+      border-radius: 12px 12px 2px 12px;
+      color: #0A0A0A;
+      margin-left: auto;
+    }
+
+    .proof-chat-reply {
+      background: rgba(245,197,24,0.12);
+      border: 1px solid rgba(245,197,24,0.25);
+      border-radius: 12px 12px 12px 2px;
+      color: #0A0A0A;
+    }
+
+    .proof-chat-time {
+      font-family: var(--font-mono);
+      font-size: 0.42rem;
+      color: rgba(0,0,0,0.35);
+      text-align: right;
+      margin-top: 0.25rem;
+      display: block;
     }
 
     /* MAX mascot */
@@ -840,19 +1047,19 @@
     }
 
     .mascot-img {
-      height: clamp(160px, 20vh, 200px);
+      height: clamp(140px, 18vh, 160px);
       width: auto;
       display: block;
       background: transparent;
-      -webkit-mask-image: linear-gradient(to top,transparent 0%,rgba(0,0,0,0.3) 20%,rgba(0,0,0,0.7) 40%,black 60%);
-      mask-image: linear-gradient(to top,transparent 0%,rgba(0,0,0,0.3) 20%,rgba(0,0,0,0.7) 40%,black 60%);
+      -webkit-mask-image: linear-gradient(to top, transparent 0%, rgba(0,0,0,0.3) 20%, rgba(0,0,0,0.7) 40%, black 60%);
+      mask-image: linear-gradient(to top, transparent 0%, rgba(0,0,0,0.3) 20%, rgba(0,0,0,0.7) 40%, black 60%);
       filter: drop-shadow(0 0 20px rgba(245,197,24,0.2));
-      animation: float 4s ease-in-out infinite alternate;
+      animation: maxEntrance 0.8s ease-out 0.5s both, float 4s ease-in-out 1.3s infinite alternate;
     }
 
     .speech-bubble {
       position: absolute;
-      top: -44px;
+      top: -40px;
       left: 50%;
       transform: translateX(-50%);
       background: #ffffff;
@@ -874,15 +1081,13 @@
       padding: 2rem 2rem;
       border-top: 1px solid rgba(245,197,24,0.08);
       border-bottom: 1px solid rgba(245,197,24,0.08);
-      clip-path: none;
-      margin-top: 0;
     }
 
     .trust-pills {
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       justify-content: space-between;
-      gap: 2rem;
+      gap: 1.5rem;
       max-width: var(--container);
       margin: 0 auto;
       flex-wrap: nowrap;
@@ -895,12 +1100,7 @@
       gap: 0.55rem;
       text-align: center;
       flex: 1;
-      background: transparent;
-      border: none;
-      border-radius: 0;
-      padding: 0;
     }
-    .trust-pill:hover { border-color: transparent; box-shadow: none; }
 
     .trust-pill-icon {
       color: var(--gold);
@@ -912,9 +1112,17 @@
     .trust-pill-text {
       font-family: var(--font-body);
       font-weight: 500;
-      font-size: 0.88rem;
+      font-size: 0.85rem;
       color: var(--cream);
       line-height: 1.3;
+    }
+
+    /* Featured pill: gold background wrapper */
+    .trust-pill.trust-pill-featured {
+      background: rgba(245,197,24,0.08);
+      border: 1px solid rgba(245,197,24,0.2);
+      border-radius: var(--radius-pill);
+      padding: 0.5rem 1.25rem;
     }
 
     .trust-pill.trust-pill-featured .trust-pill-text {
@@ -926,7 +1134,21 @@
     ═══════════════════════════════════════ */
     .servicios-section {
       background: var(--cream);
-      padding: 4rem 2rem 6rem;
+      padding: 5rem 2rem 6rem;
+    }
+
+    .servicios-section-header {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      max-width: var(--container);
+      margin: 0 auto 3rem;
+    }
+
+    .servicios-gold-rule {
+      width: 48px;
+      height: 2px;
+      background: var(--gold);
     }
 
     .categorias-grid {
@@ -937,9 +1159,15 @@
       margin: 0 auto;
     }
 
+    /* Card A: full width */
+    .categoria-card[data-cat="A"] {
+      grid-column: 1 / -1;
+      display: block;
+    }
+
     .categoria-card {
       background: var(--white);
-      border: 1px solid var(--line-cream);
+      border: 1px solid rgba(0,0,0,0.06);
       border-radius: var(--radius-card);
       padding: 2rem;
       cursor: pointer;
@@ -948,12 +1176,38 @@
       position: relative;
       overflow: hidden;
     }
+
     .categoria-card:hover {
-      border-color: var(--gold);
-      box-shadow: var(--shadow-gold);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.1);
       transform: translateY(-3px);
     }
-    .categoria-card.open { border-color: rgba(245,197,24,0.5); }
+
+    .categoria-card.open { box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+
+    /* Colored left borders — always visible */
+    .categoria-card[data-cat="A"] { border-left: 3px solid #F5C518; }
+    .categoria-card[data-cat="B"] { border-left: 3px solid #3B82F6; }
+    .categoria-card[data-cat="C"] { border-left: 3px solid #8B5CF6; }
+    .categoria-card[data-cat="D"] { border-left: 3px solid #22C55E; }
+
+    /* Card number top-right ghost */
+    .categoria-card::before {
+      content: attr(data-cat-num);
+      position: absolute;
+      top: -0.5rem;
+      right: 1rem;
+      font-family: var(--font-display);
+      font-size: 4rem;
+      color: #000;
+      opacity: 0.04;
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+      z-index: 0;
+    }
+
+    /* Remove the animated left border pseudo (using real border-left now) */
+    .categoria-card::after { display: none; }
 
     .categoria-header {
       display: flex;
@@ -961,6 +1215,8 @@
       justify-content: space-between;
       gap: 1rem;
       margin-bottom: 0.75rem;
+      position: relative;
+      z-index: 1;
     }
 
     .categoria-header-left {
@@ -994,6 +1250,8 @@
       color: var(--black);
       line-height: 1;
       margin-bottom: 0.6rem;
+      position: relative;
+      z-index: 1;
     }
     .categoria-title .serif-part {
       font-family: var(--font-serif);
@@ -1018,6 +1276,8 @@
       line-height: 1.65;
       color: var(--grey-soft);
       margin-bottom: 0.75rem;
+      position: relative;
+      z-index: 1;
     }
 
     .categoria-price {
@@ -1025,10 +1285,12 @@
       align-items: baseline;
       gap: 0.25rem;
       margin-bottom: 0.5rem;
+      position: relative;
+      z-index: 1;
     }
     .categoria-price-value {
       font-family: var(--font-display);
-      font-size: 1.8rem;
+      font-size: 2rem;
       line-height: 1;
       color: var(--gold-deep);
     }
@@ -1042,6 +1304,8 @@
       max-height: 0;
       overflow: hidden;
       transition: max-height 0.4s ease-out;
+      position: relative;
+      z-index: 1;
     }
 
     .categoria-list {
@@ -1076,18 +1340,19 @@
        12 · PROCESO
     ═══════════════════════════════════════ */
     .proceso-section {
-      background: var(--black);
+      background: var(--cream);
       padding: var(--section-pad);
       position: relative;
       overflow: hidden;
+      clip-path: none;
     }
     .proceso-section::before {
       content: '';
       position: absolute;
       top: 50%; left: 50%;
       transform: translate(-50%,-50%);
-      width: 600px; height: 600px;
-      background: radial-gradient(circle, rgba(245,197,24,0.04) 0%, transparent 60%);
+      width: 600px; height: 300px;
+      background: radial-gradient(ellipse, rgba(245,197,24,0.04) 0%, transparent 70%);
       pointer-events: none;
     }
 
@@ -1107,40 +1372,59 @@
       text-align: center;
       gap: 1rem;
       padding: 0 1rem;
+      position: relative;
+    }
+    .proceso-step::before {
+      content: attr(data-step);
+      font-family: var(--font-display);
+      font-size: clamp(5rem, 10vw, 8rem);
+      color: var(--gold);
+      opacity: 0.08;
+      position: absolute;
+      top: -2rem;
+      left: -1rem;
+      line-height: 1;
+      z-index: 0;
+      pointer-events: none;
+      user-select: none;
     }
 
     .proceso-connector {
       display: flex;
       align-items: flex-start;
-      padding-top: 24px;
+      padding-top: 28px;
     }
     .proceso-connector-line {
       width: 100%;
       min-width: 40px;
       height: 1px;
-      background: linear-gradient(to right, rgba(245,197,24,0.4), rgba(245,197,24,0.1));
+      background: var(--gold);
+      opacity: 0.3;
     }
 
     .paso-number {
-      width: 48px; height: 48px;
+      width: 56px; height: 56px;
       border-radius: 50%;
-      border: 1.5px solid var(--gold);
+      border: 2px solid var(--gold);
+      background: rgba(245,197,24,0.08);
       display: flex;
       align-items: center;
       justify-content: center;
       font-family: var(--font-display);
-      font-size: 1.1rem;
+      font-size: 1.3rem;
       color: var(--gold);
       flex-shrink: 0;
       transition: background var(--transition);
+      position: relative;
+      z-index: 1;
     }
-    .proceso-step:hover .paso-number { background: rgba(245,197,24,0.1); }
+    .proceso-step:hover .paso-number { background: rgba(245,197,24,0.12); }
 
     .paso-title {
       font-family: var(--font-body);
       font-weight: 600;
       font-size: 0.9rem;
-      color: var(--cream);
+      color: var(--black);
       line-height: 1.3;
     }
     .paso-desc {
@@ -1148,21 +1432,29 @@
       font-weight: 300;
       font-size: 0.82rem;
       line-height: 1.65;
-      color: rgba(250,246,237,0.5);
+      color: var(--grey-soft);
     }
+
+    .proceso-section .section-eyebrow  { color: var(--grey-soft); }
+    .proceso-section .section-headline { color: var(--black); }
+    .proceso-section .section-sub      { color: var(--grey-soft); }
 
     .proceso-cta { text-align: center; margin-top: 3.5rem; }
     .proceso-cta-text {
       font-family: var(--font-body);
       font-size: 0.8rem;
-      color: rgba(250,246,237,0.35);
+      color: var(--grey-soft);
       margin-top: 0.75rem;
     }
 
     /* ═══════════════════════════════════════
        13 · BOOKKEEPING
     ═══════════════════════════════════════ */
-    .booking-section { background: var(--cream); padding: var(--section-pad); }
+    .booking-section {
+      background: var(--cream);
+      padding: var(--section-pad);
+      clip-path: none;
+    }
 
     .planes-grid {
       display: grid;
@@ -1182,8 +1474,15 @@
       position: relative;
     }
     .plan-card:hover { box-shadow: var(--shadow-card); }
-    .plan-card.featured { border: 2px solid var(--gold); box-shadow: var(--shadow-gold); }
-    .plan-card.open { border-color: rgba(245,197,24,0.6); }
+    .plan-card.featured {
+      background: var(--black);
+      border: 2px solid var(--gold);
+      transform: scale(1.04) translateY(-12px);
+      box-shadow: 0 24px 80px rgba(0,0,0,0.2), 0 0 0 1px rgba(245,197,24,0.3);
+      color: var(--cream);
+    }
+    .plan-card.open { border-left: 3px solid var(--gold); }
+    .plan-card.featured.open { border-left: 3px solid var(--gold); }
 
     .plan-badge {
       position: absolute;
@@ -1229,7 +1528,7 @@
     .plan-price { display: flex; align-items: baseline; gap: 0.15rem; }
     .plan-price-value {
       font-family: var(--font-display);
-      font-size: 2rem;
+      font-size: clamp(2rem, 4vw, 3rem);
       line-height: 1;
       color: var(--black);
     }
@@ -1237,6 +1536,17 @@
       font-family: var(--font-body);
       font-size: 0.78rem;
       color: var(--grey-soft);
+    }
+    .plan-price::after {
+      content: 'USD';
+      display: block;
+      font-family: var(--font-body);
+      font-size: 0.6rem;
+      font-weight: 500;
+      color: var(--grey-soft);
+      align-self: flex-end;
+      padding-bottom: 0.2rem;
+      letter-spacing: 0.05em;
     }
 
     .plan-expand-label {
@@ -1312,31 +1622,52 @@
       background: var(--gold);
     }
 
+    /* Featured plan overrides */
+    .plan-card.featured .plan-name,
+    .plan-card.featured .plan-expand-label { color: rgba(250,246,237,0.65); }
+    .plan-card.featured .plan-price-value  { color: var(--gold); }
+    .plan-card.featured .plan-price-period { color: rgba(250,246,237,0.5); }
+    .plan-card.featured .plan-list li      { color: var(--cream); }
+    .plan-card.featured .plan-for          { color: rgba(250,246,237,0.5); border-top-color: var(--line-dark); }
+    .plan-card.featured .plan-content-inner{ border-top-color: var(--line-dark); }
+    .plan-card.featured .plan-arrow        { color: rgba(250,246,237,0.5); }
+    .plan-card.featured.open .plan-arrow   { color: var(--gold); }
+
     /* ═══════════════════════════════════════
        14 · CREDENCIALES
     ═══════════════════════════════════════ */
     .cred-section { background: var(--cream); padding: var(--section-pad); border-top: 1px solid var(--line-cream); }
 
     .cred-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
       max-width: var(--container);
       margin: 0 auto;
     }
 
     .cred-card {
-      background: var(--white);
-      border: 1px solid var(--line-cream);
-      border-radius: var(--radius-card);
-      padding: 2rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      transition: border-color var(--transition), box-shadow var(--transition),
-                  transform var(--transition-fast);
+      display: grid;
+      grid-template-columns: 80px 1fr auto;
+      align-items: center;
+      gap: 2rem;
+      padding: 2.5rem 0;
+      border-bottom: 1px solid var(--line-cream);
+      background: transparent;
+      transition: border-bottom-color var(--transition);
     }
-    .cred-card:hover { border-color: var(--gold); box-shadow: var(--shadow-gold); transform: translateY(-3px); }
+    .cred-card:hover { border-bottom-color: rgba(245,197,24,0.4); }
+    .cred-card:last-child { border-bottom: none; }
+    .cred-card::before {
+      content: attr(data-num);
+      font-family: var(--font-display);
+      font-size: 4rem;
+      color: var(--gold);
+      opacity: 0.2;
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+    }
 
     .cred-icon { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; color: var(--gold-deep); }
 
@@ -1347,6 +1678,7 @@
       text-transform: uppercase;
       color: var(--black);
       line-height: 1.1;
+      margin-bottom: 0.4rem;
     }
 
     .cred-text {
@@ -1377,20 +1709,18 @@
     }
     .cred-badge:hover, .cred-badge:focus-visible { border-color: var(--gold); color: var(--gold-deep); }
 
-    .trust-strip {
+    .cred-strip {
       background: var(--black);
-      padding: 1.5rem 2rem;
-      text-align: center;
-    }
-    .trust-strip-text {
+      color: var(--gold);
       font-family: var(--font-mono);
-      font-size: 0.58rem;
-      font-weight: 500;
+      font-size: 0.7rem;
       letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: rgba(250,246,237,0.35);
+      text-align: center;
+      padding: 1.5rem 2rem;
+      border-radius: 8px;
+      margin: 3rem auto 0;
+      max-width: var(--container);
     }
-    .trust-strip-text strong { color: var(--gold); font-weight: 500; }
 
     /* ═══════════════════════════════════════
        15 · FAQ
@@ -1462,31 +1792,34 @@
        16 · CONTACTO
     ═══════════════════════════════════════ */
     .contacto-section {
-      background: var(--black);
-      padding: var(--section-pad);
-      position: relative;
-      overflow: hidden;
+      background: none;
+      padding: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      clip-path: none;
     }
-    .contacto-section::before {
+
+    .contacto-left {
+      background: var(--black);
+      padding: calc(4vw + 5rem) 4rem 5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      position: relative;
+    }
+    .contacto-left::before {
       content: '';
       position: absolute;
-      top: -200px; right: -200px;
+      top: -200px; left: -200px;
       width: 600px; height: 600px;
       background: radial-gradient(circle, rgba(245,197,24,0.05) 0%, transparent 60%);
       pointer-events: none;
     }
 
-    .contacto-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      max-width: var(--container);
-      margin: 0 auto;
-      position: relative;
-      z-index: var(--z-base);
+    .contacto-right {
+      background: #ffffff;
+      padding: calc(4vw + 5rem) 4rem 5rem;
     }
-
-    .contacto-left { display: flex; flex-direction: column; gap: 2rem; }
 
     .contacto-info { display: flex; flex-direction: column; gap: 0.85rem; }
 
@@ -1504,25 +1837,18 @@
     .contacto-max-wrapper { position: relative; width: fit-content; }
     .contacto-max-img { height: 90px; width: auto; display: block; }
 
-    .contacto-right {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid var(--line-dark);
-      border-radius: var(--radius-card);
-      padding: 2.5rem;
-    }
-
     .contacto-form-header { margin-bottom: 1.75rem; }
     .contacto-form-title {
       font-family: var(--font-display);
       font-size: 1.3rem;
       letter-spacing: 0.05em;
       text-transform: uppercase;
-      color: var(--cream);
+      color: var(--black);
     }
     .contacto-form-sub {
       font-family: var(--font-body);
       font-size: 0.78rem;
-      color: rgba(250,246,237,0.4);
+      color: var(--grey-soft);
       margin-top: 0.3rem;
     }
 
@@ -1536,7 +1862,7 @@
       font-weight: 500;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: rgba(250,246,237,0.4);
+      color: var(--grey-soft);
     }
 
     .form-input,
@@ -1544,29 +1870,24 @@
     .form-textarea {
       width: 100%;
       padding: 0.75rem 1rem;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(245,197,24,0.14);
+      background: var(--cream);
+      border: 1px solid var(--line-cream);
       border-radius: var(--radius-btn);
       font-family: var(--font-body);
       font-size: 0.88rem;
-      color: var(--cream);
+      color: var(--black);
       transition: border-color var(--transition), background var(--transition);
-      min-height: 48px;
-      -webkit-appearance: none;
-      appearance: none;
     }
-    .form-input::placeholder, .form-textarea::placeholder { color: rgba(250,246,237,0.2); }
-    .form-select option { background: var(--black); color: var(--cream); }
+    .form-input::placeholder,
+    .form-textarea::placeholder { color: rgba(10,10,10,0.3); }
+    .form-select option { background: var(--white); color: var(--black); }
     .form-input:focus,
     .form-select:focus,
     .form-textarea:focus {
       outline: none;
       border-color: var(--gold);
-      background: rgba(245,197,24,0.04);
+      background: var(--white);
     }
-    .form-textarea { resize: vertical; min-height: 90px; line-height: 1.6; }
-
-    .form-cta { width: 100%; justify-content: center; margin-top: 0.5rem; }
 
     .form-note {
       display: flex;
@@ -1574,74 +1895,99 @@
       gap: 0.4rem;
       font-family: var(--font-body);
       font-size: 0.72rem;
-      color: rgba(250,246,237,0.28);
+      color: var(--grey-soft);
     }
-    .form-note-icon { width: 12px; height: 12px; flex-shrink: 0; color: rgba(250,246,237,0.28); }
+    .form-note-icon { width: 12px; height: 12px; color: var(--grey-soft); flex-shrink: 0; }
 
     /* ═══════════════════════════════════════
        17 · FOOTER
     ═══════════════════════════════════════ */
     .footer {
       background: var(--black);
-      border-top: 1px solid var(--line-dark);
-      padding: 3rem 2rem 2rem;
       position: relative;
       overflow: hidden;
     }
 
-    .footer-inner { max-width: var(--container); margin: 0 auto; display: flex; flex-direction: column; gap: 2rem; }
+    .footer::before {
+      content: '';
+      display: block;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold) 30%, var(--gold) 70%, transparent);
+      opacity: 0.3;
+      margin-bottom: 4rem;
+    }
+
+    .footer-inner {
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 0 2rem 3rem;
+    }
 
     .footer-top {
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
-      gap: 2rem;
-      flex-wrap: wrap;
+      gap: 3rem;
+      padding-bottom: 2.5rem;
+      border-bottom: 1px solid var(--line-dark);
+      margin-bottom: 2rem;
     }
 
     .footer-brand { display: flex; flex-direction: column; gap: 0.4rem; }
 
-    .footer-logo { font-family: var(--font-display); font-size: 1.8rem; letter-spacing: 0.02em; color: var(--cream); }
-    .footer-logo .logo-tax    { color: var(--gold); }
-    .footer-logo .logo-degree { color: var(--gold); }
+    .footer-logo {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      letter-spacing: 0.02em;
+      color: var(--cream);
+    }
 
     .footer-tagline {
       font-family: var(--font-mono);
       font-size: 0.55rem;
       font-weight: 500;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.25em;
       text-transform: uppercase;
       color: rgba(250,246,237,0.3);
     }
 
-    .footer-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+    .footer-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
     .footer-links a {
       font-family: var(--font-mono);
       font-size: 0.55rem;
       font-weight: 500;
-      letter-spacing: 0.15em;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
       color: rgba(250,246,237,0.35);
       transition: color var(--transition);
     }
-    .footer-links a:hover, .footer-links a:focus-visible { color: var(--gold); }
+    .footer-links a:hover,
+    .footer-links a:focus-visible { color: var(--gold); }
 
-    .footer-social { display: flex; gap: 0.75rem; }
+    .footer-social {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
     .footer-social-link {
       width: 36px; height: 36px;
+      border-radius: 50%;
+      border: 1px solid var(--line-dark);
       display: flex;
       align-items: center;
       justify-content: center;
-      border: 1px solid var(--line-dark);
-      border-radius: 50%;
-      color: rgba(250,246,237,0.35);
-      transition: border-color var(--transition), color var(--transition);
+      color: rgba(250,246,237,0.4);
+      transition: color var(--transition), border-color var(--transition);
     }
-    .footer-social-link:hover, .footer-social-link:focus-visible { border-color: var(--gold); color: var(--gold); }
+    .footer-social-link:hover,
+    .footer-social-link:focus-visible { color: var(--gold); border-color: var(--gold); }
 
     .footer-bottom {
-      padding-top: 1.5rem;
-      border-top: 1px solid var(--line-dark);
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -1666,10 +2012,11 @@
 
     .footer-watermark {
       position: absolute;
-      bottom: -2rem; right: -1rem;
+      bottom: 0; right: -2rem;
       font-family: var(--font-display);
-      font-size: clamp(6rem, 14vw, 12rem);
-      color: rgba(250,246,237,0.02);
+      font-size: clamp(8rem, 20vw, 16rem);
+      color: var(--cream);
+      opacity: 0.04;
       letter-spacing: 0.1em;
       line-height: 1;
       pointer-events: none;
@@ -1699,535 +2046,6 @@
     }
     .whatsapp-fab:active { transform: scale(0.96); }
 
-    .whatsapp-fab-pulse {
-      position: absolute;
-      inset: -6px;
-      border-radius: 50%;
-      background: rgba(37,211,102,0.2);
-      animation: pulse 3s ease-in-out infinite;
-      pointer-events: none;
-    }
-
-    /* ═══════════════════════════════════════
-       19 · RESPONSIVE — TABLET (≤1024px)
-    ═══════════════════════════════════════ */
-    @media (max-width: 1024px) {
-      :root { --section-pad: 4rem 1.5rem; }
-
-      .hero-inner {
-        grid-template-columns: 1fr;
-        padding-top: calc(80px + 3rem);
-        gap: 3rem;
-      }
-      .hero-right { justify-content: flex-start; min-height: auto; }
-      .scroll-document { max-width: 100%; margin-left: 0; }
-
-      .categorias-grid  { grid-template-columns: 1fr; }
-      .servicios-section { padding: 3rem 1.25rem 4rem; }
-
-      .planes-grid {
-        grid-template-columns: 1fr;
-        max-width: 480px;
-        margin-left: auto;
-        margin-right: auto;
-      }
-
-      .cred-grid { grid-template-columns: 1fr; }
-
-      .contacto-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-
-      .proceso-steps {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-      }
-      .proceso-connector { display: none; }
-      .proceso-step {
-        text-align: left;
-        flex-direction: row;
-        align-items: flex-start;
-        gap: 1.25rem;
-      }
-
-      .faq-header-with-max { flex-direction: column; align-items: flex-start; }
-      .footer-top { flex-direction: column; }
-    }
-
-    /* ═══════════════════════════════════════
-       20 · RESPONSIVE — MOBILE (≤768px)
-    ═══════════════════════════════════════ */
-    @media (max-width: 768px) {
-      .nav { padding: 1rem 1.25rem; }
-      .nav.scrolled { padding: 0.75rem 1.25rem; }
-      .nav-links { display: none; }
-      .nav-cta   { display: none; }
-      .hamburger { display: flex; }
-      .nav-drawer { display: flex; }
-
-      .mascot-wrapper { display: none; }
-
-      .hero-inner { padding: calc(70px + 2rem) 1.25rem 3rem; }
-      .hero-ctas  { flex-direction: column; align-items: stretch; }
-      .hero-ctas .btn { justify-content: center; }
-
-      .trust-pills {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 1.5rem 1rem;
-      }
-      .trust-pill { flex-direction: column; align-items: center; }
-      .trust-pill-text { font-size: 0.78rem; }
-
-      .section-header { margin-bottom: 2rem; }
-      .container { padding: 0 1.25rem; }
-
-      .faq-header-with-max .faq-max-wrapper { display: none; }
-
-      .footer-bottom { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
-
-      .whatsapp-fab { bottom: 1.25rem; right: 1.25rem; }
-    }
-
-    /* ═══════════════════════════════════════
-       21 · RESPONSIVE — SMALL MOBILE (≤375px)
-    ═══════════════════════════════════════ */
-    @media (max-width: 375px) {
-      :root { --section-pad: 3rem 1rem; }
-
-      .hero-h1-line1 { font-size: 3rem; }
-      .hero-h1-line2 { font-size: 2rem; }
-
-      .trust-pills { grid-template-columns: 1fr; }
-      .trust-pill  { font-size: 0.75rem; }
-
-      .btn { padding: 0.8rem 1.3rem; font-size: 0.78rem; }
-
-      .plan-trigger      { padding: 1.25rem; }
-      .plan-content-inner { padding: 0 1.25rem 1.25rem; }
-
-      .contacto-right { padding: 1.5rem; }
-    }
-    /* ═══════════════════════════════════════
-       SURGERIES — VISUAL DEPTH & POLISH v2
-    ═══════════════════════════════════════ */
-
-    /* ── S1A: Hero grain overlay ──────────────────────────────────────────── */
-    .hero::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 1;
-      opacity: 0.4;
-    }
-
-    /* ── S1B: Hero watermark override ────────────────────────────────────── */
-    .hero-watermark {
-      bottom: -3rem;
-      right: -2rem;
-      left: auto;
-      font-size: clamp(15rem, 35vw, 28rem);
-      color: var(--gold);
-      opacity: 0.04;
-    }
-
-    /* ── S1C: Gold line accent after eyebrow ─────────────────────────────── */
-    .hero-line-accent {
-      display: block;
-      margin-bottom: 1.5rem;
-    }
-    .hero-line-accent-bar {
-      width: 48px;
-      height: 2px;
-      background: var(--gold);
-      display: block;
-    }
-    .hero-line-accent-dot { display: none; }
-
-    /* ── S1D: Hero H1 sizing ─────────────────────────────────────────────── */
-    .hero-h1-line1 {
-      font-size: clamp(5rem, 9vw, 8rem);
-      line-height: 0.88;
-      font-family: var(--font-display);
-      text-transform: uppercase;
-      color: var(--cream);
-      letter-spacing: 0.01em;
-    }
-    .hero-h1-b1 {
-      font-family: var(--font-display);
-      font-size: clamp(5rem, 9vw, 8rem);
-      line-height: 0.88;
-      letter-spacing: 0.01em;
-      text-transform: uppercase;
-      color: var(--cream);
-      display: block;
-      animation: wordReveal 0.6s ease-out 0.16s both;
-    }
-    .hero-h1-line2 {
-      font-size: clamp(3rem, 6vw, 5.5rem);
-      line-height: 1.0;
-      font-family: var(--font-serif);
-      font-style: italic;
-      color: var(--gold);
-      text-transform: none;
-      margin-top: 0.15em;
-    }
-    .hero-h1-b2 {
-      font-family: var(--font-serif);
-      font-style: italic;
-      font-size: clamp(3rem, 6vw, 5.5rem);
-      line-height: 1.0;
-      color: var(--gold);
-      text-transform: none;
-      display: block;
-      animation: wordReveal 0.6s ease-out 0.5s both;
-    }
-
-    /* ── S2: Section transitions ─────────────────────────────────────────── */
-    .trust-section {
-      clip-path: none;
-      margin-top: 0;
-      padding: 2rem 2rem;
-    }
-
-    .trust-servicios-sep {
-      display: none;
-    }
-
-    .proceso-section {
-      clip-path: polygon(0 4%, 100% 0%, 100% 100%, 0% 100%);
-      margin-top: -4vw;
-      padding-top: calc(4vw + 6rem);
-    }
-
-    .booking-section {
-      clip-path: polygon(0 0%, 100% 3%, 100% 100%, 0% 100%);
-      margin-top: -3vw;
-      padding-top: calc(3vw + 6rem);
-    }
-
-    .contacto-section {
-      clip-path: polygon(0 4%, 100% 0%, 100% 100%, 0% 100%);
-      margin-top: -4vw;
-      padding-top: calc(4vw + 6rem);
-    }
-
-    /* ── S3: Servicios visual hierarchy ──────────────────────────────────── */
-    .categoria-card::before {
-      content: attr(data-num);
-      position: absolute;
-      top: -0.5rem;
-      right: 1rem;
-      font-family: var(--font-display);
-      font-size: 6rem;
-      color: var(--gold);
-      opacity: 0.06;
-      line-height: 1;
-      pointer-events: none;
-      z-index: 0;
-      user-select: none;
-    }
-
-    .categoria-card::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 10%;
-      bottom: 10%;
-      width: 3px;
-      background: var(--gold);
-      border-radius: 0 2px 2px 0;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      pointer-events: none;
-      z-index: 0;
-    }
-    .categoria-card:hover::after,
-    .categoria-card.open::after {
-      opacity: 1;
-    }
-
-    .categoria-price-value {
-      font-size: 2rem;
-      line-height: 1;
-    }
-
-    /* ── S4: Proceso visual impact ───────────────────────────────────────── */
-    .proceso-step {
-      position: relative;
-    }
-    .proceso-step::before {
-      content: attr(data-step);
-      font-family: var(--font-display);
-      font-size: 8rem;
-      color: var(--gold);
-      opacity: 0.05;
-      position: absolute;
-      top: -1rem;
-      left: -1rem;
-      line-height: 1;
-      z-index: 0;
-      pointer-events: none;
-      user-select: none;
-    }
-
-    .paso-number {
-      width: 56px;
-      height: 56px;
-      border: 2px solid var(--gold);
-      background: rgba(245,197,24,0.08);
-      font-size: 1.3rem;
-    }
-
-    .proceso-connector-line {
-      background: linear-gradient(to right, rgba(245,197,24,0.6), rgba(245,197,24,0.2));
-      height: 1px;
-    }
-
-    .proceso-section::before {
-      height: 300px;
-      background: radial-gradient(ellipse, rgba(245,197,24,0.04) 0%, transparent 70%);
-    }
-
-    /* ── S5: Bookkeeping Stripe polish ───────────────────────────────────── */
-    .plan-card.featured {
-      transform: translateY(-8px);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.15), 0 0 0 1px rgba(245,197,24,0.3);
-    }
-
-    .plan-card.featured .plan-trigger {
-      background: linear-gradient(135deg, #0A0A0A 0%, #1a1500 100%);
-    }
-
-    .plan-price-value {
-      font-size: clamp(2.5rem, 5vw, 3.5rem);
-    }
-
-    .plan-price::after {
-      content: 'USD';
-      display: block;
-      font-family: var(--font-body);
-      font-size: 0.6rem;
-      font-weight: 500;
-      color: var(--grey-soft);
-      align-self: flex-end;
-      padding-bottom: 0.2rem;
-      letter-spacing: 0.05em;
-    }
-
-    .plan-card.open {
-      border-left: 3px solid var(--gold);
-    }
-
-    /* ── S6: Nav refined ─────────────────────────────────────────────────── */
-    @keyframes wa-pulse {
-      0%, 100% { opacity: 1; }
-      50%       { opacity: 0.7; }
-    }
-    .nav-cta svg {
-      animation: wa-pulse 2s ease-in-out infinite;
-    }
-
-    /* ── S7: Footer personality ───────────────────────────────────────────── */
-    .footer-watermark {
-      font-size: clamp(8rem, 20vw, 16rem);
-      color: var(--cream);
-      opacity: 0.04;
-      bottom: 0;
-      right: -2rem;
-    }
-
-    .footer::before {
-      content: '';
-      display: block;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--gold) 30%, var(--gold) 70%, transparent);
-      opacity: 0.3;
-      margin-bottom: 4rem;
-    }
-
-    /* ── Mobile clip-path resets ─────────────────────────────────────────── */
-    @media (max-width: 768px) {
-      .trust-section {
-        clip-path: none;
-        margin-top: 0;
-        padding: 2rem 1.25rem;
-      }
-      .proceso-section {
-        clip-path: none;
-        margin-top: 0;
-        padding-top: 4rem;
-      }
-      .booking-section {
-        clip-path: none;
-        margin-top: 0;
-        padding-top: 4rem;
-      }
-      .contacto-section {
-        clip-path: none;
-        margin-top: 0;
-        padding-top: 4rem;
-      }
-      .proceso-step::before {
-        display: none;
-      }
-    }
-
-    /* ═══════════════════════════════════════
-       v2.1 · DESIGN REFINEMENTS
-    ═══════════════════════════════════════ */
-
-    @keyframes shimmer {
-      0%   { background-position: -200% center; }
-      100% { background-position:  200% center; }
-    }
-    @keyframes maxEntrance {
-      from { opacity: 0; transform: translateX(20px); }
-      to   { opacity: 1; transform: translateX(0); }
-    }
-
-    /* CHANGE 1A: Proceso → cream background */
-    .proceso-section { background: var(--cream); }
-    .proceso-section .section-eyebrow  { color: var(--grey-soft); }
-    .proceso-section .section-headline { color: var(--black); }
-    .proceso-section .section-sub      { color: var(--grey-soft); }
-    .paso-title       { color: var(--black); }
-    .paso-desc        { color: var(--grey-soft); }
-    .proceso-cta-text { color: var(--grey-soft); }
-    .proceso-step:hover .paso-number { background: rgba(245,197,24,0.12); }
-
-    /* CHANGE 5: Proceso step watermark numbers (cream context) */
-    .proceso-step::before {
-      font-size: clamp(5rem, 10vw, 8rem);
-      opacity: 0.12;
-      top: -2rem;
-    }
-    .proceso-connector-line {
-      background: var(--gold);
-      opacity: 0.3;
-      height: 1px;
-    }
-
-    /* CHANGE 1B: Contacto → split black / white layout */
-    .contacto-section {
-      background: none;
-      padding: 0;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-    }
-    .contacto-section::before { top: 0; right: auto; left: -100px; }
-
-    .contacto-left {
-      background: var(--black);
-      padding: calc(4vw + 5rem) 4rem 5rem;
-    }
-    .contacto-right {
-      background: #ffffff;
-      border: none;
-      border-radius: 0;
-      padding: calc(4vw + 5rem) 4rem 5rem;
-    }
-
-    /* Form styles for white panel */
-    .form-label { color: var(--grey-soft); }
-    .form-input,
-    .form-select,
-    .form-textarea {
-      background: var(--cream);
-      border: 1px solid var(--line-cream);
-      color: var(--black);
-    }
-    .form-input::placeholder,
-    .form-textarea::placeholder { color: rgba(10,10,10,0.3); }
-    .form-select option          { background: var(--white); color: var(--black); }
-    .form-input:focus,
-    .form-select:focus,
-    .form-textarea:focus {
-      border-color: var(--gold);
-      background: var(--white);
-    }
-    .contacto-form-title { color: var(--black); }
-    .contacto-form-sub   { color: var(--grey-soft); }
-    .form-note           { color: var(--grey-soft); }
-    .form-note-icon      { color: var(--grey-soft); }
-
-    @media (max-width: 768px) {
-      .contacto-section { grid-template-columns: 1fr; }
-      .contacto-left,
-      .contacto-right   { padding: 3rem 1.5rem; }
-    }
-
-    /* CHANGE 2: Hero improvements */
-    .hero-inner { grid-template-columns: 55% 45%; }
-
-    .hero-watermark {
-      font-size: clamp(18rem, 40vw, 32rem);
-      opacity: 0.035;
-      color: var(--gold);
-      bottom: -4rem;
-      right:  -3rem;
-      left: auto;
-    }
-
-    .badge-pill {
-      background: transparent;
-      animation: none;
-    }
-
-    .mascot-img {
-      animation: maxEntrance 0.8s ease-out 0.5s both,
-                 float 4s ease-in-out 1.3s infinite alternate;
-    }
-
-    /* CHANGE 3: Servicios — featured card A + watermark via data-cat-num */
-    .categoria-card::before { content: attr(data-cat-num); }
-
-    .categoria-card[data-cat="A"] {
-      grid-column: 1 / -1;
-      display: grid;
-      grid-template-columns: 1.2fr 1fr;
-      gap: 3rem;
-      align-items: start;
-    }
-    @media (max-width: 768px) {
-      .categoria-card[data-cat="A"] {
-        grid-column: 1;
-        grid-template-columns: 1fr;
-        gap: 1rem;
-      }
-    }
-
-    /* CHANGE 4: Bookkeeping featured card elevation */
-    .plan-card.featured {
-      background: var(--black);
-      border: 2px solid var(--gold);
-      transform: scale(1.04) translateY(-12px);
-      box-shadow: 0 24px 80px rgba(0,0,0,0.2),
-                  0 0 0 1px rgba(245,197,24,0.3);
-      color: var(--cream);
-    }
-    .plan-card.featured .plan-name,
-    .plan-card.featured .plan-expand-label { color: rgba(250,246,237,0.65); }
-    .plan-card.featured .plan-price-value  { color: var(--gold); }
-    .plan-card.featured .plan-price-period { color: rgba(250,246,237,0.5); }
-    .plan-card.featured .plan-trigger      { background: none; }
-    .plan-card.featured .plan-list li      { color: var(--cream); }
-    .plan-card.featured .plan-for          { color: rgba(250,246,237,0.5); border-top-color: var(--line-dark); }
-    .plan-card.featured .plan-content-inner{ border-top-color: var(--line-dark); }
-    .plan-card.featured .plan-arrow        { color: rgba(250,246,237,0.5); }
-    .plan-card.featured.open .plan-arrow   { color: var(--gold); }
-    @media (max-width: 768px) {
-      .plan-card.featured { transform: none; }
-    }
-
-    /* CHANGE 6: Global details */
-    ::-webkit-scrollbar       { width: 5px; }
-    ::-webkit-scrollbar-track { background: var(--cream); }
-    ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
-    ::selection { background: var(--gold); color: var(--black); }
-    a, button, .categoria-card, .plan-trigger, .faq-question {
-      cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Ccircle cx='10' cy='10' r='4' fill='%23F5C518'/%3E%3C/svg%3E") 10 10, pointer;
-    }
     .whatsapp-fab::after {
       content: 'Escríbenos';
       position: absolute;
@@ -2248,85 +2066,21 @@
     }
     .whatsapp-fab:hover::after { opacity: 1; }
 
-    /* CHANGE 7: Credenciales → editorial numbered list */
-    .cred-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      max-width: var(--container);
-      margin: 0 auto;
-    }
-    .cred-card {
-      display: grid;
-      grid-template-columns: 80px 1fr auto;
-      align-items: center;
-      gap: 2rem;
-      padding: 2.5rem 0;
-      border-bottom: 1px solid var(--line-cream);
-      border-radius: 0;
-      box-shadow: none;
-      background: transparent;
-      transform: none;
-    }
-    .cred-card:hover {
-      border-color: var(--line-cream);
-      border-bottom-color: rgba(245,197,24,0.4);
-      box-shadow: none;
-      transform: none;
-    }
-    .cred-card:last-child { border-bottom: none; }
-    .cred-card::before {
-      content: attr(data-num);
-      font-family: var(--font-display);
-      font-size: 4rem;
-      color: var(--gold);
-      opacity: 0.2;
-      line-height: 1;
+    .whatsapp-fab-pulse {
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      background: rgba(37,211,102,0.2);
+      animation: pulse 3s ease-in-out infinite;
       pointer-events: none;
-      user-select: none;
-    }
-    .cred-strip {
-      background: var(--black);
-      color: var(--gold);
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      letter-spacing: 0.2em;
-      text-align: center;
-      padding: 1.5rem 2rem;
-      border-radius: 8px;
-      margin: 3rem auto 0;
-      max-width: var(--container);
-    }
-    @media (max-width: 768px) {
-      .cred-card {
-        grid-template-columns: 50px 1fr;
-        gap: 1rem;
-      }
-      .cred-card .cred-badge { grid-column: 1 / -1; }
     }
 
-    /* prefers-reduced-motion for new animations */
-    @media (prefers-reduced-motion: reduce) {
-      .badge-pill { animation: none; }
-      .hero-h1-b1, .hero-h1-b2 { animation: none; opacity: 1; }
-      .mascot-img { animation: none; opacity: 1; }
-    }
-
-    /* ADD 2: no-scroll-timeline fallback */
-    @keyframes heroReveal {
-      from { opacity: 0; transform: translateY(20px); filter: blur(4px); }
-      to   { opacity: 1; transform: translateY(0);    filter: blur(0); }
-    }
-    .no-scroll-timeline .hero-h1-line1,
-    .no-scroll-timeline .hero-h1-line2 {
-      animation: heroReveal 1s ease-out both;
-    }
-
-    /* ADD 3: reading progress bar */
+    /* ═══════════════════════════════════════
+       19 · READING PROGRESS BAR
+    ═══════════════════════════════════════ */
     #progress-bar {
       position: fixed;
-      top: 0;
-      left: 0;
+      top: 0; left: 0;
       height: 2px;
       background: var(--gold);
       width: 0%;
@@ -2335,13 +2089,164 @@
       pointer-events: none;
     }
 
+    /* ═══════════════════════════════════════
+       20 · CUSTOM CURSOR
+    ═══════════════════════════════════════ */
+    a, button, .categoria-card, .plan-trigger, .faq-question {
+      cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Ccircle cx='10' cy='10' r='4' fill='%23F5C518'/%3E%3C/svg%3E") 10 10, pointer;
+    }
+
+    /* ═══════════════════════════════════════
+       21 · RESPONSIVE — TABLET (≤1024px)
+    ═══════════════════════════════════════ */
+    @media (max-width: 1024px) {
+      :root { --section-pad: 4rem 1.5rem; }
+
+      .hero-inner {
+        grid-template-columns: 1fr;
+        padding-top: calc(80px + 3rem);
+        gap: 3rem;
+      }
+
+      .hero-right {
+        justify-content: flex-start;
+        min-height: 380px;
+      }
+
+      .proof-stack { min-height: 380px; }
+
+      .categorias-grid { grid-template-columns: 1fr; }
+      .servicios-section { padding: 3rem 1.25rem 4rem; }
+
+      .planes-grid {
+        grid-template-columns: 1fr;
+        max-width: 480px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .cred-grid { display: flex; flex-direction: column; gap: 0; }
+      .cred-card { grid-template-columns: 50px 1fr; gap: 1rem; }
+      .cred-card .cred-badge { grid-column: 1 / -1; }
+
+      .contacto-section { grid-template-columns: 1fr; }
+      .contacto-left,
+      .contacto-right { padding: 4rem 2.5rem; }
+
+      .proceso-steps {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+      .proceso-connector { display: none; }
+      .proceso-step {
+        text-align: left;
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 1.25rem;
+      }
+      .proceso-step::before { display: none; }
+
+      .faq-header-with-max { flex-direction: column; align-items: flex-start; }
+      .footer-top { flex-direction: column; }
+    }
+
+    /* ═══════════════════════════════════════
+       22 · RESPONSIVE — MOBILE (≤768px)
+    ═══════════════════════════════════════ */
+    @media (max-width: 768px) {
+      .nav { padding: 1rem 1.25rem; }
+      .nav.scrolled { padding: 0.75rem 1.25rem; }
+      .nav-links { display: none; }
+      .nav-cta   { display: none; }
+      .hamburger { display: flex; }
+      .nav-drawer { display: flex; }
+
+      .mascot-wrapper { display: none; }
+
+      .hero-inner { padding: calc(70px + 2rem) 1.25rem 3rem; }
+      .hero-ctas  { flex-direction: column; align-items: stretch; }
+      .hero-ctas .btn { justify-content: center; }
+
+      /* Mobile hero: show only chat card centered */
+      .proof-card-llc  { display: none; }
+      .proof-card-tax  { display: none; }
+      .proof-card-chat {
+        position: static;
+        transform: none;
+        max-width: 280px;
+        margin: 0 auto;
+        width: 100%;
+      }
+      .proof-stack {
+        min-height: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .trust-pills {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.25rem 1rem;
+      }
+      .trust-pill { flex-direction: column; align-items: center; }
+      .trust-pill-text { font-size: 0.78rem; }
+      .trust-pill.trust-pill-featured { grid-column: 1 / -1; }
+
+      .section-header { margin-bottom: 2rem; }
+      .container { padding: 0 1.25rem; }
+
+      .faq-header-with-max .faq-max-wrapper { display: none; }
+
+      .footer-bottom { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+
+      .plan-card.featured { transform: none; }
+
+      .whatsapp-fab { bottom: 1.25rem; right: 1.25rem; }
+      .whatsapp-fab::after { display: none; }
+
+      .contacto-section { grid-template-columns: 1fr; }
+      .contacto-left,
+      .contacto-right { padding: 3rem 1.5rem; }
+    }
+
+    /* ═══════════════════════════════════════
+       23 · RESPONSIVE — SMALL MOBILE (≤375px)
+    ═══════════════════════════════════════ */
+    @media (max-width: 375px) {
+      :root { --section-pad: 3rem 1rem; }
+
+      .hero-h1-line1 { font-size: 3.5rem; }
+      .hero-h1-b1    { font-size: 3.5rem; }
+      .hero-h1-line2 { font-size: 2rem; }
+
+      .trust-pills { grid-template-columns: 1fr; }
+
+      .btn { padding: 0.8rem 1.3rem; font-size: 0.78rem; }
+
+      .plan-trigger      { padding: 1.25rem; }
+      .plan-content-inner { padding: 0 1.25rem 1.25rem; }
+
+      .contacto-right { padding: 1.5rem; }
+    }
+
+    /* ═══════════════════════════════════════
+       24 · REDUCED MOTION
+    ═══════════════════════════════════════ */
+    @media (prefers-reduced-motion: reduce) {
+      .proof-card    { animation: none; opacity: 1; }
+      .mascot-img    { animation: none; opacity: 1; }
+      .hero-h1-b1    { animation: none; opacity: 1; }
+      .hero-h1-line1 .word,
+      .hero-h1-line2 .word { animation: none; opacity: 1; filter: none; transform: none; }
+    }
+
   </style>
 </head>
 <body>
-  <!-- ADD 3: reading progress bar -->
+
   <div id="progress-bar" aria-hidden="true"></div>
 
-  <!-- Skip link -->
   <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
 
   <!-- NAV -->
@@ -2362,10 +2267,7 @@
       WhatsApp
     </a>
 
-    <button class="hamburger"
-            aria-label="Abrir menú"
-            aria-expanded="false"
-            aria-controls="nav-drawer">
+    <button class="hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-drawer">
       <span class="hamburger-line" aria-hidden="true"></span>
       <span class="hamburger-line" aria-hidden="true"></span>
       <span class="hamburger-line" aria-hidden="true"></span>
@@ -2373,11 +2275,7 @@
   </nav>
 
   <!-- MOBILE DRAWER -->
-  <nav id="nav-drawer"
-       class="nav-drawer"
-       role="navigation"
-       aria-label="Menú móvil"
-       aria-hidden="true">
+  <nav id="nav-drawer" class="nav-drawer" role="navigation" aria-label="Menú móvil" aria-hidden="true">
     <a href="#servicios">SERVICIOS</a>
     <a href="#bookkeeping">BOOKKEEPING</a>
     <a href="#proceso">PROCESO</a>
@@ -2407,28 +2305,25 @@
     </div>
   </div>
 
-  <!-- MAIN -->
   <main id="main-content">
 
     <!-- HERO -->
     <section id="hero" class="hero" aria-labelledby="hero-heading">
       <div class="hero-bg" aria-hidden="true"></div>
-      <div class="hero-glow" aria-hidden="true"></div>
-      <div class="hero-watermark" aria-hidden="true">360</div>
+      <div class="hero-watermark" aria-hidden="true">360°</div>
 
       <div class="hero-inner">
-        <div class="hero-left">
-          <p class="hero-eyebrow">Tax &amp; Business Services · Florida</p>
 
-          <div class="hero-line-accent" aria-hidden="true">
-            <span class="hero-line-accent-bar"></span>
-          </div>
+        <!-- Left: Copy -->
+        <div class="hero-left">
+
+          <span class="hero-eyebrow">Tax &amp; Business Services · Florida</span>
 
           <h1 id="hero-heading" class="hero-h1">
             <span class="hero-h1-line1">TUS TAXES</span>
             <span class="hero-h1-b1">Y TU NEGOCIO,</span>
-            <span class="hero-h1-line2">en las mejores</span>
-            <span class="hero-h1-b2">manos.</span>
+            <span class="hero-h1-sep" aria-hidden="true"></span>
+            <span class="hero-h1-line2">en las mejores manos.</span>
           </h1>
 
           <p class="hero-sub">Te ayudamos a organizar tus taxes, crear tu negocio y manejar tus trámites fiscales con confianza. En español, paso a paso, sin complicaciones.</p>
@@ -2444,13 +2339,13 @@
                class="btn btn-primary wa-link"
                data-msg="default"
                target="_blank"
-               rel="noopener noreferrer">
+               rel="noopener noreferrer"
+               style="border-radius:8px;padding:0.95rem 2rem">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
               Hablar Ahora
             </a>
             <a href="#servicios" class="btn btn-secondary">
-              Ver Servicios
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              Ver Servicios →
             </a>
           </div>
 
@@ -2458,28 +2353,65 @@
             <span class="urgency-dot" aria-hidden="true"></span>
             Respondemos en menos de 2 horas hábiles
           </p>
+
         </div>
 
+        <!-- Right: Social Proof Stack -->
         <div class="hero-right">
-          <!-- Scroll document (Mercury-style animation) -->
-          <div class="scroll-document" aria-hidden="true">
-            <div class="doc-header">
-              <span class="doc-header-title"></span>
-              <span class="doc-header-sub"></span>
+
+          <div class="proof-stack" aria-hidden="true">
+
+            <!-- Card 1: LLC Approval — bottom layer -->
+            <div class="proof-card proof-card-llc">
+              <p class="proof-llc-agency">State of Florida · Div. of Corp.</p>
+              <h4 class="proof-llc-title">LLC APPROVAL</h4>
+              <div class="proof-llc-divider"></div>
+              <div class="proof-llc-field">
+                <span class="proof-llc-label">Business Name</span>
+                <span class="proof-llc-value">MAX CONSULTING LLC</span>
+              </div>
+              <div class="proof-llc-field">
+                <span class="proof-llc-label">Reg. Number</span>
+                <span class="proof-llc-value">L26000836753</span>
+              </div>
+              <span class="proof-llc-approved">APPROVED</span>
             </div>
-            <div class="doc-field">
-              <span class="doc-field-label"></span>
-              <span class="doc-field-value"></span>
+
+            <!-- Card 2: Tax Refund — middle layer -->
+            <div class="proof-card proof-card-tax">
+              <p class="proof-tax-agency">IRS · Form 1040</p>
+              <p class="proof-tax-label-title">Refund Estimado</p>
+              <p class="proof-tax-amount">$3,240</p>
+              <p class="proof-tax-sub">Para familia de 4 · FL</p>
+              <div class="proof-tax-sep"></div>
+              <div class="proof-tax-row">
+                <span>Ingresos declarados</span><span>$48,500</span>
+              </div>
+              <div class="proof-tax-row">
+                <span>Créditos aplicados</span><span>$1,890</span>
+              </div>
+              <div class="proof-tax-status">✓ Presentado a tiempo</div>
             </div>
-            <div class="doc-field">
-              <span class="doc-field-label"></span>
-              <span class="doc-field-value"></span>
+
+            <!-- Card 3: WhatsApp Chat — top layer -->
+            <div class="proof-card proof-card-chat">
+              <div class="proof-chat-header">
+                <div class="proof-chat-icon">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                </div>
+                <div class="proof-chat-info">
+                  <span class="proof-chat-name">MaxTax360°</span>
+                  <span class="proof-chat-online">
+                    <span class="proof-chat-online-dot"></span>En línea
+                  </span>
+                </div>
+              </div>
+              <div class="proof-chat-sep"></div>
+              <span class="proof-chat-bubble proof-chat-user">Necesito crear mi LLC 🙏</span>
+              <span class="proof-chat-bubble proof-chat-reply">¡Hola! Con gusto te ayudo. Empezamos hoy mismo 🇺🇸</span>
+              <p class="proof-chat-time">Respuesta en 47 min</p>
             </div>
-            <div class="doc-field">
-              <span class="doc-field-label"></span>
-              <span class="doc-field-value"></span>
-            </div>
-            <div class="doc-stamp" aria-hidden="true"></div>
+
           </div>
 
           <!-- MAX mascot — desktop only -->
@@ -2491,56 +2423,72 @@
                  loading="lazy"
                  decoding="async">
           </div>
+
         </div>
       </div>
     </section>
 
     <!-- CONFIANZA -->
-    <section id="confianza"
-             class="trust-section"
-             aria-label="Razones para confiar en nosotros">
+    <section id="confianza" class="trust-section" aria-label="Razones para confiar en nosotros">
       <ul class="trust-pills" role="list">
+
         <li class="trust-pill" role="listitem">
-          <svg class="trust-pill-icon" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M3 9l4 4L15 4" stroke="#F5C518" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg class="trust-pill-icon" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+            <path d="M3 9l4 4L15 4" stroke="#F5C518" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
           <span class="trust-pill-text">Atención en español e inglés</span>
         </li>
+
         <li class="trust-pill" role="listitem">
-          <svg class="trust-pill-icon" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M3 9l4 4L15 4" stroke="#F5C518" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg class="trust-pill-icon" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+            <path d="M3 9l4 4L15 4" stroke="#F5C518" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
           <span class="trust-pill-text">Respuesta en menos de 2 horas</span>
         </li>
+
         <li class="trust-pill trust-pill-featured" role="listitem">
-          <svg class="trust-pill-icon" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M3 9l4 4L15 4" stroke="#F5C518" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg class="trust-pill-icon" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+            <path d="M3 9l4 4L15 4" stroke="#F5C518" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
           <span class="trust-pill-text">Sin importar tu situación migratoria</span>
         </li>
+
         <li class="trust-pill" role="listitem">
-          <svg class="trust-pill-icon" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M3 9l4 4L15 4" stroke="#F5C518" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg class="trust-pill-icon" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+            <path d="M3 9l4 4L15 4" stroke="#F5C518" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
           <span class="trust-pill-text">Te guiamos paso a paso</span>
         </li>
+
       </ul>
     </section>
 
-    <!-- Trust → Servicios separator -->
-    <div class="trust-servicios-sep" aria-hidden="true"></div>
+    <div class="trust-servicios-sep" aria-hidden="true" style="display:none"></div>
 
     <!-- SERVICIOS -->
-    <section id="servicios"
-             class="servicios-section"
-             aria-labelledby="servicios-heading">
-      <div class="section-header reveal">
-        <p class="section-eyebrow">Servicios</p>
+    <section id="servicios" class="servicios-section" aria-labelledby="servicios-heading">
+
+      <div class="servicios-section-header reveal">
+        <div class="servicios-gold-rule" aria-hidden="true"></div>
         <h2 id="servicios-heading" class="section-headline">NUESTROS <span class="serif-accent">Servicios</span></h2>
         <p class="section-sub">Cada trámite tiene su proceso. Te explicamos todo en español, desde el principio hasta que tengas tus documentos listos.</p>
       </div>
 
       <div class="categorias-grid stagger-group">
 
-        <!-- A: Creación de Empresas -->
-        <article class="categoria-card reveal" aria-expanded="false" data-num="01" data-cat="A" data-cat-num="01">
+        <!-- A: Creación de Empresas — full width -->
+        <article class="categoria-card reveal"
+                 aria-expanded="false"
+                 data-num="01"
+                 data-cat="A"
+                 data-cat-num="01">
           <div class="categoria-header">
             <div class="categoria-header-left">
               <span class="categoria-number">01</span>
               <div class="categoria-icon" aria-hidden="true">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M9 21V7l6-4v18M9 7H3v14M15 12h2M15 16h2M9 12H7M9 16H7"/></svg>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 21h18M9 21V7l6-4v18M9 7H3v14M15 12h2M15 16h2M9 12H7M9 16H7"/>
+                </svg>
               </div>
             </div>
             <svg class="categoria-arrow" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 9l6 6 6-6"/></svg>
@@ -2549,7 +2497,6 @@
           <p class="categoria-intro">¿Quieres operar legalmente y proteger lo que has construido? Te ayudamos a crear tu empresa correctamente desde el primer día.</p>
           <div class="categoria-price">
             <span class="categoria-price-value">Desde $97</span>
-            <span class="categoria-price-label"></span>
           </div>
           <div class="categoria-content">
             <ul class="categoria-list">
@@ -2569,12 +2516,21 @@
         </article>
 
         <!-- B: Taxes -->
-        <article class="categoria-card reveal" aria-expanded="false" data-num="02" data-cat="B" data-cat-num="02">
+        <article class="categoria-card reveal"
+                 aria-expanded="false"
+                 data-num="02"
+                 data-cat="B"
+                 data-cat-num="02">
           <div class="categoria-header">
             <div class="categoria-header-left">
               <span class="categoria-number">02</span>
               <div class="categoria-icon" aria-hidden="true">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V9z"/><polyline points="14,3 14,9 20,9"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="12" y2="17"/></svg>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V9z"/>
+                  <polyline points="14,3 14,9 20,9"/>
+                  <line x1="8" y1="13" x2="16" y2="13"/>
+                  <line x1="8" y1="17" x2="12" y2="17"/>
+                </svg>
               </div>
             </div>
             <svg class="categoria-arrow" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 9l6 6 6-6"/></svg>
@@ -2582,8 +2538,7 @@
           <h3 class="categoria-title">TAXES <span class="serif-part">Personales y de Negocio</span></h3>
           <p class="categoria-intro">¿Necesitas presentar tus impuestos correctamente? Manejamos taxes individuales, de negocio, enmiendas y más. Cada caso es diferente — por eso evaluamos el tuyo primero.</p>
           <div class="categoria-price">
-            <span class="categoria-price-value" style="font-size:1.2rem;color:var(--grey-soft)">Cotización personalizada</span>
-            <span class="categoria-price-label"></span>
+            <span class="categoria-price-value" style="font-size:1.1rem;color:var(--grey-soft)">Cotización personalizada</span>
           </div>
           <div class="categoria-content">
             <ul class="categoria-list">
@@ -2605,12 +2560,20 @@
         </article>
 
         <!-- C: ITIN -->
-        <article class="categoria-card reveal" aria-expanded="false" data-num="03" data-cat="C" data-cat-num="03">
+        <article class="categoria-card reveal"
+                 aria-expanded="false"
+                 data-num="03"
+                 data-cat="C"
+                 data-cat-num="03">
           <div class="categoria-header">
             <div class="categoria-header-left">
               <span class="categoria-number">03</span>
               <div class="categoria-icon" aria-hidden="true">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="7" cy="12" r="2"/><path d="M12 10h6M12 14h4"/></svg>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="6" width="20" height="12" rx="2"/>
+                  <circle cx="7" cy="12" r="2"/>
+                  <path d="M12 10h6M12 14h4"/>
+                </svg>
               </div>
             </div>
             <svg class="categoria-arrow" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 9l6 6 6-6"/></svg>
@@ -2619,7 +2582,6 @@
           <p class="categoria-intro">¿No tienes SSN pero necesitas número fiscal? El ITIN te permite presentar taxes, abrir negocios y formalizar tu vida financiera en EE.UU., sin importar tu situación migratoria.</p>
           <div class="categoria-price">
             <span class="categoria-price-value">Desde $200</span>
-            <span class="categoria-price-label"></span>
           </div>
           <div class="categoria-content">
             <ul class="categoria-list">
@@ -2640,12 +2602,21 @@
         </article>
 
         <!-- D: Business Services -->
-        <article class="categoria-card reveal" aria-expanded="false" data-num="04" data-cat="D" data-cat-num="04">
+        <article class="categoria-card reveal"
+                 aria-expanded="false"
+                 data-num="04"
+                 data-cat="D"
+                 data-cat-num="04">
           <div class="categoria-header">
             <div class="categoria-header-left">
               <span class="categoria-number">04</span>
               <div class="categoria-icon" aria-hidden="true">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/><line x1="3" y1="20" x2="21" y2="20"/></svg>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="12" y1="20" x2="12" y2="10"/>
+                  <line x1="18" y1="20" x2="18" y2="4"/>
+                  <line x1="6"  y1="20" x2="6"  y2="16"/>
+                  <line x1="3"  y1="20" x2="21" y2="20"/>
+                </svg>
               </div>
             </div>
             <svg class="categoria-arrow" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 9l6 6 6-6"/></svg>
@@ -2654,7 +2625,6 @@
           <p class="categoria-intro">¿Tu negocio necesita orden y soporte continuo? Desde llevar tus libros contables hasta asesoría mensual, tenemos planes adaptados a tu etapa.</p>
           <div class="categoria-price">
             <span class="categoria-price-value">Desde $147<span style="font-size:1rem">/mes</span></span>
-            <span class="categoria-price-label"></span>
           </div>
           <div class="categoria-content">
             <ul class="categoria-list">
@@ -2676,18 +2646,100 @@
       </div>
     </section>
 
+
+    <!-- ── Part 2 overrides (section-specific CSS corrections) ── -->
+    <style>
+      /* PROCESO: dark bg + cream text */
+      .proceso-section { background: #0F0F0F; }
+      .proceso-section::before { background: radial-gradient(circle at 50% 50%, rgba(245,197,24,0.05) 0%, transparent 55%); }
+      .proceso-section .section-eyebrow  { color: rgba(245,197,24,0.65); }
+      .proceso-section .section-headline { color: var(--cream); }
+      .proceso-section .section-sub      { color: rgba(250,246,237,0.5); }
+      .paso-title       { color: var(--cream); }
+      .paso-desc        { color: rgba(250,246,237,0.5); }
+      .proceso-cta-text { color: rgba(250,246,237,0.4); }
+      .proceso-step::before { color: var(--cream); opacity: 0.03; }
+
+      /* BOOKKEEPING: editorial badge */
+      .plan-badge { background: var(--black) !important; color: var(--gold) !important; }
+      .plan-card:not(.featured):hover { border-color: rgba(245,197,24,0.4); }
+      .bookkeeping-gold-rule { width: 48px; height: 2px; background: var(--gold); }
+
+      /* CONTACTO FORM: border-bottom-only treatment */
+      .form-input,
+      .form-select,
+      .form-textarea {
+        background: transparent;
+        border: none;
+        border-bottom: 1.5px solid rgba(0,0,0,0.15);
+        border-radius: 0;
+        padding: 0.75rem 0;
+        color: var(--black);
+        font-size: 0.9rem;
+        transition: border-color 0.2s ease;
+      }
+      .form-input::placeholder,
+      .form-textarea::placeholder { color: rgba(42,42,42,0.3); }
+      .form-input:focus,
+      .form-select:focus,
+      .form-textarea:focus {
+        outline: none;
+        border-bottom-color: var(--gold);
+        background: transparent;
+      }
+      .form-textarea { min-height: 100px; resize: vertical; }
+      .form-label {
+        color: #2A2A2A;
+        font-family: var(--font-mono);
+        font-size: 0.6rem;
+        font-weight: 500;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+      }
+      .form-select {
+        appearance: none;
+        -webkit-appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23F5C518' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 0 center;
+        padding-right: 1.5rem;
+        cursor: pointer;
+      }
+      .form-submit-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        width: 100%;
+        padding: 0.95rem 2rem;
+        background: var(--gold);
+        color: var(--black);
+        border: none;
+        border-radius: 8px;
+        font-family: var(--font-body);
+        font-weight: 700;
+        font-size: 0.85rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        min-height: 48px;
+        cursor: pointer;
+        transition: background var(--transition), transform var(--transition-fast);
+      }
+      .form-submit-btn:hover  { background: var(--gold-deep); }
+      .form-submit-btn:active { transform: scale(0.98); }
+    </style>
+
     <!-- PROCESO -->
-    <section id="proceso"
-             class="proceso-section"
-             aria-labelledby="proceso-heading">
+    <section id="proceso" class="proceso-section" aria-labelledby="proceso-heading">
       <div class="proceso-inner">
         <div class="section-header reveal">
           <p class="section-eyebrow">Cómo trabajamos</p>
-          <h2 id="proceso-heading" class="section-headline">ASÍ DE <span class="serif-accent">Simple</span></h2>
+          <h2 id="proceso-heading" class="section-headline">ASÍ DE <span class="serif-accent" style="color:var(--gold)">Simple</span></h2>
           <p class="section-sub">Sin papeleo complicado, sin esperas eternas.</p>
         </div>
 
         <div class="proceso-steps stagger-group">
+
           <div class="proceso-step reveal" data-step="01">
             <div class="paso-number" aria-hidden="true">01</div>
             <div>
@@ -2695,9 +2747,11 @@
               <p class="paso-desc">Por WhatsApp, rápido y en español.</p>
             </div>
           </div>
+
           <div class="proceso-connector" aria-hidden="true">
             <div class="proceso-connector-line"></div>
           </div>
+
           <div class="proceso-step reveal" data-step="02">
             <div class="paso-number" aria-hidden="true">02</div>
             <div>
@@ -2705,9 +2759,11 @@
               <p class="paso-desc">Sin compromisos. Te decimos exactamente qué hacer.</p>
             </div>
           </div>
+
           <div class="proceso-connector" aria-hidden="true">
             <div class="proceso-connector-line"></div>
           </div>
+
           <div class="proceso-step reveal" data-step="03">
             <div class="paso-number" aria-hidden="true">03</div>
             <div>
@@ -2715,6 +2771,7 @@
               <p class="paso-desc">Tú te enfocas en tu negocio. Nosotros hacemos el resto.</p>
             </div>
           </div>
+
         </div>
 
         <div class="proceso-cta reveal">
@@ -2722,7 +2779,8 @@
              class="btn btn-primary wa-link"
              data-msg="proceso"
              target="_blank"
-             rel="noopener noreferrer">
+             rel="noopener noreferrer"
+             style="border-radius:8px">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
             Empezar es gratis — escríbenos ahora
           </a>
@@ -2732,11 +2790,10 @@
     </section>
 
     <!-- BOOKKEEPING -->
-    <section id="bookkeeping"
-             class="booking-section"
-             aria-labelledby="bookkeeping-heading">
-      <div class="section-header reveal">
-        <p class="section-eyebrow">Opción 02</p>
+    <section id="bookkeeping" class="booking-section" aria-labelledby="bookkeeping-heading">
+
+      <div class="section-header reveal" style="max-width:var(--container);margin:0 auto 3rem">
+        <div class="bookkeeping-gold-rule" aria-hidden="true"></div>
         <h2 id="bookkeeping-heading" class="section-headline">BOOKKEEPING <span class="serif-accent">Mensual</span></h2>
         <p class="section-sub">Tu contabilidad en piloto automático. Sin sorpresas al final del año.</p>
       </div>
@@ -2745,9 +2802,7 @@
 
         <!-- Starter -->
         <div class="plan-card reveal">
-          <button class="plan-trigger"
-                  aria-expanded="false"
-                  aria-controls="plan-starter-content">
+          <button class="plan-trigger" aria-expanded="false" aria-controls="plan-starter-content">
             <div class="plan-trigger-left">
               <span class="plan-name">Starter</span>
               <div class="plan-price">
@@ -2768,11 +2823,7 @@
                 <li><svg class="plan-list-check" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="#B8860B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>15% descuento en taxes anuales</li>
                 <li><svg class="plan-list-check" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="#B8860B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Soporte WhatsApp (24-48h)</li>
               </ul>
-              <a href="https://wa.me/14707200373"
-                 class="btn btn-primary plan-cta wa-link"
-                 data-msg="starter"
-                 target="_blank"
-                 rel="noopener noreferrer">Empezar ahora</a>
+              <a href="https://wa.me/14707200373" class="btn btn-primary plan-cta wa-link" data-msg="starter" target="_blank" rel="noopener noreferrer">Empezar ahora</a>
             </div>
           </div>
         </div>
@@ -2780,9 +2831,7 @@
         <!-- Business (featured) -->
         <div class="plan-card featured reveal">
           <div class="plan-badge">Más popular</div>
-          <button class="plan-trigger"
-                  aria-expanded="false"
-                  aria-controls="plan-business-content">
+          <button class="plan-trigger" aria-expanded="false" aria-controls="plan-business-content">
             <div class="plan-trigger-left">
               <span class="plan-name">Business</span>
               <div class="plan-price">
@@ -2797,30 +2846,24 @@
             <div class="plan-content-inner">
               <p class="plan-for">Para dueños de negocios pequeños activos</p>
               <ul class="plan-list">
-                <li><svg class="plan-list-check" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="#B8860B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Hasta 150 transacciones/mes</li>
-                <li><svg class="plan-list-check" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="#B8860B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Conciliación bancaria mensual</li>
-                <li><svg class="plan-list-check" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="#B8860B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Reporte P&amp;L + Balance Sheet mensual</li>
-                <li><svg class="plan-list-check" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="#B8860B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Categorización de gastos</li>
-                <li><svg class="plan-list-check" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="#B8860B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Cálculo de impuestos trimestrales</li>
-                <li><svg class="plan-list-check" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="#B8860B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Soporte prioritario WhatsApp (24h)</li>
-                <li><svg class="plan-list-check" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="#B8860B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>1 consulta mensual por Zoom (45 min)</li>
-                <li><svg class="plan-list-check" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="#B8860B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Taxes empresa: 50% off mes 1-6</li>
-                <li><svg class="plan-list-check" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="#B8860B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Taxes empresa INCLUIDOS desde mes 7</li>
+                <li><svg class="plan-list-check" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="#F5C518" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Hasta 150 transacciones/mes</li>
+                <li><svg class="plan-list-check" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="#F5C518" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Conciliación bancaria mensual</li>
+                <li><svg class="plan-list-check" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="#F5C518" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Reporte P&amp;L + Balance Sheet mensual</li>
+                <li><svg class="plan-list-check" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="#F5C518" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Categorización de gastos</li>
+                <li><svg class="plan-list-check" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="#F5C518" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Cálculo de impuestos trimestrales</li>
+                <li><svg class="plan-list-check" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="#F5C518" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Soporte prioritario WhatsApp (24h)</li>
+                <li><svg class="plan-list-check" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="#F5C518" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>1 consulta mensual por Zoom (45 min)</li>
+                <li><svg class="plan-list-check" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="#F5C518" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Taxes empresa: 50% off mes 1-6</li>
+                <li><svg class="plan-list-check" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="#F5C518" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Taxes empresa INCLUIDOS desde mes 7+</li>
               </ul>
-              <a href="https://wa.me/14707200373"
-                 class="btn btn-primary plan-cta wa-link"
-                 data-msg="business"
-                 target="_blank"
-                 rel="noopener noreferrer">Empezar ahora</a>
+              <a href="https://wa.me/14707200373" class="btn btn-primary plan-cta wa-link" data-msg="business" target="_blank" rel="noopener noreferrer">Empezar ahora</a>
             </div>
           </div>
         </div>
 
         <!-- Premium -->
         <div class="plan-card reveal">
-          <button class="plan-trigger"
-                  aria-expanded="false"
-                  aria-controls="plan-premium-content">
+          <button class="plan-trigger" aria-expanded="false" aria-controls="plan-premium-content">
             <div class="plan-trigger-left">
               <span class="plan-name">Premium</span>
               <div class="plan-price">
@@ -2844,14 +2887,9 @@
                 <li><svg class="plan-list-check" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="#B8860B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Taxes individuales con 10% off</li>
                 <li><svg class="plan-list-check" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="#B8860B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Soporte VIP 7 días/semana (&lt;12h)</li>
                 <li><svg class="plan-list-check" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="#B8860B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>2 consultas mensuales por Zoom</li>
-                <li><svg class="plan-list-check" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="#B8860B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Reunión presencial opcional*</li>
               </ul>
-              <p style="font-size:0.72rem;color:var(--grey-soft);font-style:italic;padding-bottom:0.75rem">*Disponible en Davenport / Kissimmee / Orlando</p>
-              <a href="https://wa.me/14707200373"
-                 class="btn btn-primary plan-cta wa-link"
-                 data-msg="premium"
-                 target="_blank"
-                 rel="noopener noreferrer">Empezar ahora</a>
+              <p style="font-size:0.72rem;color:var(--grey-soft);font-style:italic;padding:0.25rem 0 0.75rem">*Reunión presencial disponible en Davenport / Kissimmee / Orlando</p>
+              <a href="https://wa.me/14707200373" class="btn btn-primary plan-cta wa-link" data-msg="premium" target="_blank" rel="noopener noreferrer">Empezar ahora</a>
             </div>
           </div>
         </div>
@@ -2865,36 +2903,25 @@
         <span class="plan-banner-dot" aria-hidden="true"></span>
         <span>Cancela cuando quieras</span>
       </div>
+
     </section>
 
     <!-- CREDENCIALES -->
-    <section id="credenciales"
-             class="cred-section"
-             aria-labelledby="credenciales-heading">
+    <section id="credenciales" class="cred-section" aria-labelledby="cred-heading">
       <div class="section-header reveal">
         <p class="section-eyebrow">Por qué elegirnos</p>
-        <h2 id="credenciales-heading" class="section-headline">
-          CREDENCIALES <span class="serif-accent">Reales,</span><br>
-          RESULTADOS <span class="serif-accent">Reales.</span>
-        </h2>
+        <h2 id="cred-heading" class="section-headline">CREDENCIALES <span class="serif-accent">Reales,</span></h2>
         <p class="section-sub">No somos notarios, no somos improvisados. Somos Tax Preparers registrados ante el IRS, respaldados por Enrolled Agents certificados.</p>
       </div>
 
-      <div class="cred-grid stagger-group">
+      <div class="cred-grid">
 
         <div class="cred-card reveal" data-num="01">
           <div>
             <h3 class="cred-title">Tax Preparer IRS</h3>
             <p class="cred-text">Registrados ante el IRS. Tu declaración la firma un profesional autorizado — no un notario, no alguien sin credenciales.</p>
           </div>
-          <a href="https://www.irs.gov/taxpros"
-             class="cred-badge"
-             target="_blank"
-             rel="noopener noreferrer"
-             aria-label="Verificar en IRS.gov/taxpros">
-            <span>Verificable en IRS.gov/taxpros</span>
-            <span aria-hidden="true">→</span>
-          </a>
+          <a href="https://www.irs.gov/taxpros" target="_blank" rel="noopener noreferrer" class="cred-badge">Verificable en IRS.gov/taxpros →</a>
         </div>
 
         <div class="cred-card reveal" data-num="02">
@@ -2919,9 +2946,8 @@
     </section>
 
     <!-- FAQ -->
-    <section id="faq"
-             class="faq-section"
-             aria-labelledby="faq-heading">
+    <section id="faq" class="faq-section" aria-labelledby="faq-heading">
+
       <div class="faq-header-with-max">
         <div class="faq-header-content reveal">
           <p class="section-eyebrow">Preguntas frecuentes</p>
@@ -2929,11 +2955,8 @@
           <p class="section-sub">¿Tienes una duda diferente? Escríbenos por WhatsApp — respondemos en menos de 2 horas.</p>
         </div>
         <div class="faq-max-wrapper" aria-hidden="true">
-          <div class="speech-bubble">Vamos por partes.</div>
-          <img src="assets/images/max.png"
-               alt=""
-               class="faq-max-img"
-               loading="lazy">
+          <div class="speech-bubble" style="top:-38px;left:50%;transform:translateX(-50%)">Vamos por partes.</div>
+          <img src="assets/images/max.png" alt="" class="faq-max-img" loading="lazy">
         </div>
       </div>
 
@@ -2993,127 +3016,101 @@
     </section>
 
     <!-- CONTACTO -->
-    <section id="contacto"
-             class="contacto-section"
-             aria-labelledby="contacto-heading">
+    <section id="contacto" class="contacto-section" aria-labelledby="contacto-heading">
 
-        <div class="contacto-left reveal-left">
-          <div>
-            <p class="section-eyebrow" style="color:rgba(250,246,237,0.35)">Contáctanos</p>
-            <h2 id="contacto-heading" class="section-headline" style="color:var(--cream)">¿LISTO PARA <span class="serif-accent" style="color:var(--gold)">Empezar?</span></h2>
-          </div>
-          <p class="section-sub" style="color:rgba(250,246,237,0.6)">Escríbenos ahora por WhatsApp o déjanos tus datos. Te contactamos en menos de 2 horas hábiles. Sin compromisos.</p>
-          <a href="https://wa.me/14707200373"
-             class="btn btn-whatsapp wa-link"
-             data-msg="default"
-             target="_blank"
-             rel="noopener noreferrer"
-             style="width:fit-content">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-            Escribir por WhatsApp
-          </a>
-          <div class="contacto-info">
-            <div class="contacto-info-item">
-              <svg class="contacto-info-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-              +1 (470) 720-0373
-            </div>
-            <div class="contacto-info-item">
-              <svg class="contacto-info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
-              360maxtax@gmail.com
-            </div>
-            <div class="contacto-info-item">
-              <svg class="contacto-info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg>
-              @maxtax360
-            </div>
-            <div class="contacto-info-item">
-              <svg class="contacto-info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
-              Lun - Vie, 9am - 6pm EST
-            </div>
-          </div>
-          <div class="contacto-max-wrapper" aria-hidden="true">
-            <div class="speech-bubble" style="top:-38px;left:auto;right:0;transform:none;border-radius:12px 12px 2px 12px">Escríbenos hoy.</div>
-            <img src="assets/images/max.png"
-                 alt=""
-                 class="contacto-max-img"
-                 loading="lazy">
-          </div>
+      <div class="contacto-left reveal-left">
+        <div>
+          <p class="section-eyebrow" style="color:rgba(245,197,24,0.65)">Contáctanos</p>
+          <h2 id="contacto-heading" class="section-headline" style="color:var(--cream)">¿LISTO PARA <span class="serif-accent" style="color:var(--gold)">Empezar?</span></h2>
         </div>
 
-        <div class="contacto-right reveal-right">
-          <div class="contacto-form-header">
-            <h3 class="contacto-form-title">Solicitar Información</h3>
-            <p class="contacto-form-sub">Te respondemos en menos de 2 horas hábiles.</p>
+        <p class="section-sub" style="color:rgba(250,246,237,0.6)">Escríbenos ahora por WhatsApp o déjanos tus datos. Te contactamos en menos de 2 horas hábiles. Sin compromisos.</p>
+
+        <a href="https://wa.me/14707200373"
+           class="btn btn-whatsapp wa-link"
+           data-msg="default"
+           target="_blank"
+           rel="noopener noreferrer"
+           style="width:fit-content">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Escribir por WhatsApp
+        </a>
+
+        <div class="contacto-info">
+          <div class="contacto-info-item">
+            <svg class="contacto-info-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            +1 (470) 720-0373
+          </div>
+          <div class="contacto-info-item">
+            <svg class="contacto-info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
+            360maxtax@gmail.com
+          </div>
+          <div class="contacto-info-item">
+            <svg class="contacto-info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg>
+            @maxtax360
+          </div>
+          <div class="contacto-info-item">
+            <svg class="contacto-info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
+            Lun – Vie, 9am – 6pm EST
+          </div>
+        </div>
+      </div>
+
+      <div class="contacto-right reveal-right">
+        <div class="contacto-form-header">
+          <h3 class="contacto-form-title">Solicitar Información</h3>
+          <p class="contacto-form-sub">Te respondemos en menos de 2 horas hábiles.</p>
+        </div>
+
+        <form class="contacto-form" id="contacto-form" novalidate>
+
+          <div class="form-group">
+            <label for="nombre" class="form-label">Nombre completo</label>
+            <input type="text" id="nombre" name="nombre" class="form-input"
+                   placeholder="Tu nombre" autocomplete="name" required aria-required="true">
           </div>
 
-          <form class="contacto-form" id="contacto-form" novalidate>
+          <div class="form-group">
+            <label for="telefono" class="form-label">WhatsApp / Teléfono</label>
+            <input type="tel" id="telefono" name="telefono" class="form-input"
+                   placeholder="+1 (000) 000-0000" autocomplete="tel">
+          </div>
 
-            <div class="form-group">
-              <label for="nombre" class="form-label">Nombre completo</label>
-              <input type="text"
-                     id="nombre"
-                     name="nombre"
-                     class="form-input"
-                     placeholder="Tu nombre"
-                     autocomplete="name"
-                     required
-                     aria-required="true">
-            </div>
+          <div class="form-group">
+            <label for="servicio" class="form-label">¿Qué necesitas?</label>
+            <select id="servicio" name="servicio" class="form-select" aria-required="true">
+              <option value="">Selecciona un servicio</option>
+              <option>Creación de empresa (LLC)</option>
+              <option>EIN</option>
+              <option>Operating Agreement</option>
+              <option>Annual Report Florida</option>
+              <option>Taxes personales</option>
+              <option>Taxes de negocio</option>
+              <option>Amendment / Corrección</option>
+              <option>ITIN (nuevo o renovación)</option>
+              <option>Bookkeeping mensual</option>
+              <option>Consultoría</option>
+              <option>Otro</option>
+            </select>
+          </div>
 
-            <div class="form-group">
-              <label for="telefono" class="form-label">WhatsApp / Teléfono</label>
-              <input type="tel"
-                     id="telefono"
-                     name="telefono"
-                     class="form-input"
-                     placeholder="+1 (000) 000-0000"
-                     autocomplete="tel">
-            </div>
+          <div class="form-group">
+            <label for="mensaje" class="form-label">Mensaje (opcional)</label>
+            <textarea id="mensaje" name="mensaje" class="form-textarea"
+                      placeholder="Cuéntanos brevemente tu situación…" rows="3"></textarea>
+          </div>
 
-            <div class="form-group">
-              <label for="servicio" class="form-label">¿Qué necesitas?</label>
-              <select id="servicio"
-                      name="servicio"
-                      class="form-select"
-                      aria-required="true">
-                <option value="">Selecciona un servicio</option>
-                <option>Creación de empresa (LLC)</option>
-                <option>EIN</option>
-                <option>Operating Agreement</option>
-                <option>Annual Report Florida</option>
-                <option>Taxes personales</option>
-                <option>Taxes de negocio</option>
-                <option>Amendment / Corrección</option>
-                <option>ITIN (nuevo o renovación)</option>
-                <option>Bookkeeping mensual</option>
-                <option>Consultoría</option>
-                <option>Otro</option>
-              </select>
-            </div>
+          <button type="submit" class="form-submit-btn">
+            Enviar por WhatsApp →
+          </button>
 
-            <div class="form-group">
-              <label for="mensaje" class="form-label">Mensaje (opcional)</label>
-              <textarea id="mensaje"
-                        name="mensaje"
-                        class="form-textarea"
-                        placeholder="Cuéntanos brevemente tu situación…"
-                        rows="3"></textarea>
-            </div>
+          <p class="form-note" style="margin-top:0.75rem">
+            <svg class="form-note-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+            Tu información está segura. Solo la usamos para contactarte.
+          </p>
 
-            <button type="submit" class="btn btn-primary form-cta">
-              Enviar por WhatsApp
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </button>
-
-            <p class="form-note">
-              <svg class="form-note-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <rect x="3" y="11" width="18" height="11" rx="2"/>
-                <path d="M7 11V7a5 5 0 0110 0v4"/>
-              </svg>
-              Tu información está segura. Solo la usamos para contactarte.
-            </p>
-
-          </form>
-        </div>
+        </form>
+      </div>
 
     </section>
 
@@ -3170,18 +3167,16 @@
      rel="noopener noreferrer"
      aria-label="Contactar por WhatsApp">
     <div class="whatsapp-fab-pulse" aria-hidden="true"></div>
-    <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-    </svg>
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
   </a>
 
   <script>
   (function () {
     'use strict';
 
-    // ADD 7: motion & capability flags (read once at boot)
     var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var supportsScrollTimeline = CSS && CSS.supports && CSS.supports('animation-timeline', 'scroll()');
+    var docRevealed = false;
 
     // ── 1. WHATSAPP UTILS ─────────────────────────────────────────────────────
 
@@ -3221,9 +3216,6 @@
       return function () { clearTimeout(t); t = setTimeout(fn, ms); };
     }
 
-    // Shared parallax state
-    var docRevealed = false;
-
     // ── 2. NAVIGATION ─────────────────────────────────────────────────────────
 
     function initNav() {
@@ -3232,7 +3224,6 @@
       var drawer    = document.getElementById('nav-drawer');
       if (!nav || !hamburger || !drawer) return;
 
-      // Scroll → .scrolled
       window.addEventListener('scroll', debounce(function () {
         nav.classList.toggle('scrolled', window.scrollY > 50);
       }, 10), { passive: true });
@@ -3268,7 +3259,6 @@
         }
       });
 
-      // Smooth scroll — anchor links
       document.querySelectorAll('a[href^="#"]').forEach(function (a) {
         a.addEventListener('click', function (e) {
           var id = a.getAttribute('href');
@@ -3288,7 +3278,6 @@
     function initTicker() {
       var track = document.querySelector('.ticker-track');
       if (!track || !track.children.length) return;
-      // Clone children for seamless -50% loop
       Array.from(track.children).forEach(function (child) {
         track.appendChild(child.cloneNode(true));
       });
@@ -3311,19 +3300,17 @@
       var doc = document.querySelector('.scroll-document');
       if (!doc) return;
 
-      // Initial offset — will rise on reveal
       doc.style.transform = 'rotate(-2deg) translateY(40px)';
 
-      // Populate content
       var now     = new Date();
       var dateStr = now.toLocaleDateString('es-US', { year: 'numeric', month: 'long', day: 'numeric' });
       var regNum  = 'L26000' + (Math.floor(Math.random() * 900000) + 100000);
 
       var fieldData = [
-        { label: 'NOMBRE / BUSINESS NAME', value: 'MAX CONSULTING LLC'   },
-        { label: 'NÚMERO DE REGISTRO',     value: regNum                 },
-        { label: 'FECHA DE FORMACIÓN',     value: dateStr                },
-        { label: 'ESTADO / STATUS',        value: 'ACTIVO ✓'        }
+        { label: 'NOMBRE / BUSINESS NAME', value: 'MAX CONSULTING LLC' },
+        { label: 'NÚMERO DE REGISTRO',     value: regNum               },
+        { label: 'FECHA DE FORMACIÓN',     value: dateStr              },
+        { label: 'ESTADO / STATUS',        value: 'ACTIVO ✓'          }
       ];
 
       var headerTitle = doc.querySelector('.doc-header-title');
@@ -3343,34 +3330,24 @@
         if (valueEl) valueEl.textContent = fieldData[i].value;
       });
 
-      // Trigger on viewport entry
       var io = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
           if (!entry.isIntersecting) return;
           io.unobserve(entry.target);
-
           setTimeout(function () {
-            // Rise + fade in
             doc.style.transition = 'opacity 0.8s ease-out, transform 0.8s ease-out';
             doc.classList.add('visible');
             doc.style.transform = 'rotate(-2deg) translateY(0)';
-
-            // After animation: hand off transform to parallax
             setTimeout(function () {
               doc.style.transition = 'opacity 0.8s ease-out';
               docRevealed = true;
             }, 900);
-
-            // Type each field
             fieldEls.forEach(function (el, i) {
               setTimeout(function () { el.classList.add('typed'); }, 500 + i * 380);
             });
-
-            // Stamp after all fields
             setTimeout(function () {
               if (stamp) stamp.classList.add('visible');
             }, 500 + fieldEls.length * 380 + 320);
-
           }, 280);
         });
       }, { threshold: 0.25 });
@@ -3390,7 +3367,6 @@
       function onRaf() {
         var scrolled = window.scrollY;
         var heroH    = hero.offsetHeight;
-
         if (scrolled <= heroH) {
           if (doc && docRevealed) {
             doc.style.transform = 'rotate(-2deg) translateY(' + (-scrolled * 0.18) + 'px)';
@@ -3402,7 +3378,6 @@
             heroBg.style.transform = 'translateY(' + (scrolled * 0.25) + 'px)';
           }
         }
-
         ticking = false;
       }
 
@@ -3410,7 +3385,6 @@
         if (!ticking) { requestAnimationFrame(onRaf); ticking = true; }
       }, { passive: true });
 
-      // ADD 1: Mouse parallax on hero (desktop only)
       hero.addEventListener('mousemove', function (e) {
         if (prefersReducedMotion) return;
         if (window.innerWidth < 1024) return;
@@ -3418,28 +3392,24 @@
         var x = (e.clientX - rect.left) / rect.width - 0.5;
         var y = (e.clientY - rect.top)  / rect.height - 0.5;
         var docEl     = document.querySelector('.scroll-document');
-        var watermark = document.querySelector('.hero-watermark');
+        var wm        = document.querySelector('.hero-watermark');
         var mascot    = document.querySelector('.mascot-wrapper');
         if (docEl) {
           var cur        = docEl.style.transform || '';
           var scrollPart = (cur.match(/translateY\([^)]+\)/) || ['translateY(0px)'])[0];
           docEl.style.transform = scrollPart + ' translate(' + (x * 12) + 'px,' + (y * 8) + 'px) rotate(-2deg)';
         }
-        if (watermark) {
-          watermark.style.transform = 'translateY(0) translate(' + (x * -8) + 'px,' + (y * -5) + 'px)';
-        }
-        if (mascot) {
-          mascot.style.transform = 'translate(' + (x * 6) + 'px,' + (y * 4) + 'px)';
-        }
+        if (wm)     wm.style.transform     = 'translateY(0) translate(' + (x * -8) + 'px,' + (y * -5) + 'px)';
+        if (mascot) mascot.style.transform = 'translate(' + (x * 6) + 'px,' + (y * 4) + 'px)';
       }, { passive: true });
 
       hero.addEventListener('mouseleave', function () {
-        var docEl     = document.querySelector('.scroll-document');
-        var watermark = document.querySelector('.hero-watermark');
-        var mascot    = document.querySelector('.mascot-wrapper');
-        if (docEl)     docEl.style.transform     = 'translateY(0px) translate(0,0) rotate(-2deg)';
-        if (watermark) watermark.style.transform = '';
-        if (mascot)    mascot.style.transform    = '';
+        var docEl  = document.querySelector('.scroll-document');
+        var wm     = document.querySelector('.hero-watermark');
+        var mascot = document.querySelector('.mascot-wrapper');
+        if (docEl)  docEl.style.transform  = 'translateY(0px) translate(0,0) rotate(-2deg)';
+        if (wm)     wm.style.transform     = '';
+        if (mascot) mascot.style.transform = '';
       }, { passive: true });
     }
 
@@ -3448,7 +3418,6 @@
     function initScrollReveal() {
       var els = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
       if (!els.length) return;
-
       var io = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
           if (entry.isIntersecting) {
@@ -3457,16 +3426,13 @@
           }
         });
       }, { threshold: 0.15 });
-
       els.forEach(function (el) { io.observe(el); });
     }
 
-    // ADD 6: Staggered trust pill entrance
     function initTrustPills() {
       if (prefersReducedMotion) return;
       var pills = document.querySelectorAll('.trust-pill');
       if (!pills.length) return;
-
       var pillObserver = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry, i) {
           if (entry.isIntersecting) {
@@ -3480,7 +3446,6 @@
           }
         });
       }, { threshold: 0.3 });
-
       pills.forEach(function (pill) {
         pill.style.opacity    = '0';
         pill.style.transform  = 'translateY(12px)';
@@ -3492,16 +3457,13 @@
     function initCounters() {
       var els = document.querySelectorAll('[data-count]');
       if (!els.length) return;
-
       function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
-
       function animate(el) {
         var target   = parseInt(el.dataset.count, 10);
         var suffix   = el.dataset.suffix || '';
         var prefix   = el.dataset.prefix || '';
         var duration = 1500;
         var start    = performance.now();
-
         function step(now) {
           var p = Math.min((now - start) / duration, 1);
           el.textContent = prefix + Math.floor(easeOut(p) * target) + suffix;
@@ -3509,7 +3471,6 @@
         }
         requestAnimationFrame(step);
       }
-
       var io = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
           if (entry.isIntersecting) {
@@ -3525,7 +3486,6 @@
           }
         });
       }, { threshold: 0.5 });
-
       els.forEach(function (el) { io.observe(el); });
     }
 
@@ -3554,30 +3514,25 @@
       cards.forEach(function (card) {
         var header = card.querySelector('.categoria-header');
         if (!header) return;
-
         header.setAttribute('role', 'button');
         header.setAttribute('tabindex', '0');
         header.style.cursor = 'pointer';
-
         header.addEventListener('click', function () {
           var wasOpen = card.classList.contains('open');
           closeAll();
           if (!wasOpen) openCard(card);
         });
-
         header.addEventListener('keydown', function (e) {
           if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); header.click(); }
         });
       });
 
-      // ADD 5: card-level keyboard activation
       cards.forEach(function (card) {
         card.addEventListener('keydown', function (e) {
           if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.click(); }
         });
       });
 
-      // Auto-open first card after 1.2s
       setTimeout(function () { if (cards[0]) openCard(cards[0]); }, 1200);
     }
 
@@ -3615,7 +3570,6 @@
         });
       });
 
-      // Auto-open featured plan
       var featured = document.querySelector('.plan-card.featured');
       if (featured) {
         setTimeout(function () { openCard(featured); }, 900);
@@ -3642,7 +3596,6 @@
         var btn    = item.querySelector('.faq-question');
         var answer = item.querySelector('.faq-answer');
         if (!btn || !answer) return;
-
         btn.addEventListener('click', function () {
           var wasOpen = item.classList.contains('open');
           closeAll();
@@ -3654,20 +3607,13 @@
         });
       });
 
-      // ADD 4: FAQ keyboard arrow navigation
       var faqBtns = Array.prototype.slice.call(document.querySelectorAll('.faq-question'));
       faqBtns.forEach(function (btn, index) {
         btn.addEventListener('keydown', function (e) {
-          if (e.key === 'ArrowDown') {
-            e.preventDefault();
-            faqBtns[Math.min(index + 1, faqBtns.length - 1)].focus();
-          }
-          if (e.key === 'ArrowUp') {
-            e.preventDefault();
-            faqBtns[Math.max(index - 1, 0)].focus();
-          }
-          if (e.key === 'Home') { e.preventDefault(); faqBtns[0].focus(); }
-          if (e.key === 'End')  { e.preventDefault(); faqBtns[faqBtns.length - 1].focus(); }
+          if (e.key === 'ArrowDown') { e.preventDefault(); faqBtns[Math.min(index + 1, faqBtns.length - 1)].focus(); }
+          if (e.key === 'ArrowUp')   { e.preventDefault(); faqBtns[Math.max(index - 1, 0)].focus(); }
+          if (e.key === 'Home')      { e.preventDefault(); faqBtns[0].focus(); }
+          if (e.key === 'End')       { e.preventDefault(); faqBtns[faqBtns.length - 1].focus(); }
         });
       });
     }
@@ -3712,9 +3658,7 @@
     function initFab() {
       var fab = document.getElementById('whatsapp-fab');
       if (!fab) return;
-
       var isMobile = window.matchMedia('(max-width: 768px)').matches;
-
       if (isMobile) {
         fab.style.opacity    = '1';
         fab.style.visibility = 'visible';
@@ -3729,7 +3673,8 @@
       }
     }
 
-    // ADD 3: progress bar scroll listener
+    // ── 11. PROGRESS BAR ──────────────────────────────────────────────────────
+
     function initProgressBar() {
       var bar = document.getElementById('progress-bar');
       if (!bar) return;
@@ -3744,7 +3689,6 @@
     // ── BOOT ──────────────────────────────────────────────────────────────────
 
     document.addEventListener('DOMContentLoaded', function () {
-      // ADD 2: scroll-timeline capability flag
       if (!supportsScrollTimeline) {
         document.documentElement.classList.add('no-scroll-timeline');
       }
