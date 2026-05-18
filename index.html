@@ -392,7 +392,7 @@
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       padding: 0.85rem 2rem;
-      box-shadow: 0 1px 0 var(--line-dark);
+      border-bottom: 1px solid rgba(245,197,24,0.3);
     }
 
     .nav-logo {
@@ -402,7 +402,7 @@
       color: var(--cream);
       flex-shrink: 0;
     }
-    .nav-logo .logo-tax    { color: var(--gold); }
+    .nav-logo .logo-tax    { color: var(--gold); text-decoration: underline; text-decoration-color: rgba(245,197,24,0.55); text-decoration-thickness: 1px; text-underline-offset: 3px; }
     .nav-logo .logo-degree { color: var(--gold); }
 
     .nav-links {
@@ -415,7 +415,7 @@
       font-family: var(--font-mono);
       font-size: 0.6rem;
       font-weight: 500;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.3em;
       text-transform: uppercase;
       color: rgba(250,246,237,0.6);
       position: relative;
@@ -441,7 +441,7 @@
       padding: 0.5rem 1.1rem;
       background: var(--gold);
       color: var(--black);
-      border-radius: var(--radius-btn);
+      border-radius: var(--radius-pill);
       font-family: var(--font-body);
       font-weight: 700;
       font-size: 0.75rem;
@@ -607,7 +607,7 @@
       width: 100%;
     }
 
-    .hero-left  { display: flex; flex-direction: column; gap: 1.5rem; }
+    .hero-left  { display: flex; flex-direction: column; gap: 0; }
     .hero-right {
       position: relative;
       display: flex;
@@ -619,23 +619,18 @@
     /* Eyebrow */
     .hero-eyebrow {
       font-family: var(--font-mono);
-      font-size: 0.6rem;
+      font-size: 0.55rem;
       font-weight: 500;
-      letter-spacing: 0.25em;
+      letter-spacing: 0.3em;
       text-transform: uppercase;
       color: var(--gold);
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
+      display: block;
+      margin-bottom: 1rem;
     }
-    .hero-eyebrow::before {
-      content: '';
-      width: 24px; height: 1px;
-      background: var(--gold);
-    }
+    .hero-eyebrow::before { display: none; }
 
     /* H1 */
-    .hero-h1  { display: flex; flex-direction: column; gap: 0.1em; }
+    .hero-h1  { display: flex; flex-direction: column; gap: 0.05em; }
 
     .hero-h1-line1 {
       font-family: var(--font-display);
@@ -667,10 +662,12 @@
     .hero-sub {
       font-family: var(--font-body);
       font-weight: 300;
-      font-size: clamp(0.9rem, 1.5vw, 1.05rem);
+      font-size: 1rem;
       line-height: 1.75;
-      color: rgba(250,246,237,0.65);
-      max-width: 480px;
+      color: rgba(250,246,237,0.6);
+      max-width: 420px;
+      margin-top: 1.75rem;
+      margin-bottom: 0;
     }
 
     /* Badges */
@@ -679,21 +676,23 @@
       align-items: center;
       gap: 0.5rem;
       flex-wrap: wrap;
+      margin-top: 1.5rem;
+      margin-bottom: 0;
     }
 
     .badge-pill {
       display: inline-flex;
       align-items: center;
       gap: 0.35rem;
-      padding: 0.3rem 0.75rem;
-      border: 1px solid var(--line-dark);
+      padding: 0.3rem 0.9rem;
+      border: 1px solid rgba(245,197,24,0.25);
       border-radius: var(--radius-pill);
       font-family: var(--font-mono);
-      font-size: 0.55rem;
+      font-size: 0.52rem;
       font-weight: 500;
       letter-spacing: 0.15em;
       text-transform: uppercase;
-      color: rgba(250,246,237,0.55);
+      color: rgba(250,246,237,0.5);
     }
 
     .badge-pill-dot {
@@ -709,6 +708,8 @@
       align-items: center;
       gap: 1rem;
       flex-wrap: wrap;
+      margin-top: 2rem;
+      margin-bottom: 0;
     }
 
     /* Urgency */
@@ -718,7 +719,8 @@
       gap: 0.5rem;
       font-family: var(--font-body);
       font-size: 0.78rem;
-      color: rgba(250,246,237,0.45);
+      color: rgba(250,246,237,0.4);
+      margin-top: 1.25rem;
     }
 
     .urgency-dot {
@@ -741,16 +743,18 @@
       position: relative;
       width: 100%;
       max-width: 360px;
-      background: rgba(255,255,255,0.05);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(245,197,24,0.22);
-      border-radius: var(--radius-card);
-      padding: 2rem;
-      transform: rotate(-2deg);
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(245,197,24,0.2);
+      border-radius: 16px;
+      padding: 2.5rem;
+      transform: rotate(-1.5deg) translateY(40px);
       transform-origin: center bottom;
       opacity: 0;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.4), 0 0 0 1px rgba(245,197,24,0.08);
       transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+      margin-left: -40px;
     }
     .scroll-document.visible { opacity: 1; }
 
@@ -836,7 +840,7 @@
     }
 
     .mascot-img {
-      height: clamp(140px, 18vh, 160px);
+      height: clamp(160px, 20vh, 200px);
       width: auto;
       display: block;
       background: transparent;
@@ -848,68 +852,86 @@
 
     .speech-bubble {
       position: absolute;
-      top: -40px;
+      top: -44px;
       left: 50%;
       transform: translateX(-50%);
-      background: var(--black);
-      border: 1px solid rgba(245,197,24,0.4);
-      border-radius: 12px 12px 12px 2px;
-      padding: 6px 14px;
+      background: #ffffff;
+      border-radius: 8px 8px 8px 2px;
+      padding: 8px 14px;
       font-family: var(--font-body);
       font-style: italic;
-      font-size: 0.8rem;
-      color: var(--cream);
+      font-size: 0.82rem;
+      color: var(--black);
       white-space: nowrap;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.18));
     }
 
     /* ═══════════════════════════════════════
-       10 · TRUST PILLS
+       10 · TRUST BAND
     ═══════════════════════════════════════ */
     .trust-section {
-      background: var(--cream);
-      padding: 2.5rem 2rem;
-      border-bottom: 1px solid var(--line-cream);
+      background: #111111;
+      padding: 2rem 2rem;
+      border-top: 1px solid rgba(245,197,24,0.08);
+      border-bottom: 1px solid rgba(245,197,24,0.08);
+      clip-path: none;
+      margin-top: 0;
     }
 
     .trust-pills {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.75rem;
-      flex-wrap: wrap;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 2rem;
       max-width: var(--container);
       margin: 0 auto;
+      flex-wrap: nowrap;
     }
 
     .trust-pill {
-      display: inline-flex;
+      display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 0.5rem;
-      padding: 0.65rem 1.2rem;
-      background: var(--white);
-      border: 1px solid var(--line-cream);
-      border-radius: var(--radius-pill);
-      font-family: var(--font-body);
-      font-size: 0.85rem;
-      font-weight: 400;
-      color: var(--black);
-      transition: border-color var(--transition), box-shadow var(--transition);
+      gap: 0.55rem;
+      text-align: center;
+      flex: 1;
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      padding: 0;
     }
-    .trust-pill:hover { border-color: var(--gold); box-shadow: var(--shadow-gold); }
+    .trust-pill:hover { border-color: transparent; box-shadow: none; }
 
-    .trust-pill-icon { color: var(--gold-deep); flex-shrink: 0; }
+    .trust-pill-icon {
+      color: var(--gold);
+      flex-shrink: 0;
+      width: 18px;
+      height: 18px;
+    }
+
+    .trust-pill-text {
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 0.88rem;
+      color: var(--cream);
+      line-height: 1.3;
+    }
+
+    .trust-pill.trust-pill-featured .trust-pill-text {
+      color: var(--gold);
+    }
 
     /* ═══════════════════════════════════════
        11 · SERVICIOS / CATEGORÍAS
     ═══════════════════════════════════════ */
     .servicios-section {
       background: var(--cream);
-      padding: var(--section-pad);
+      padding: 4rem 2rem 6rem;
     }
 
     .categorias-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 1.25rem;
       max-width: var(--container);
       margin: 0 auto;
@@ -1698,9 +1720,10 @@
         gap: 3rem;
       }
       .hero-right { justify-content: flex-start; min-height: auto; }
-      .scroll-document { max-width: 100%; }
+      .scroll-document { max-width: 100%; margin-left: 0; }
 
       .categorias-grid  { grid-template-columns: 1fr; }
+      .servicios-section { padding: 3rem 1.25rem 4rem; }
 
       .planes-grid {
         grid-template-columns: 1fr;
@@ -1749,9 +1772,10 @@
       .trust-pills {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 0.5rem;
+        gap: 1.5rem 1rem;
       }
-      .trust-pill { font-size: 0.78rem; padding: 0.55rem 0.85rem; }
+      .trust-pill { flex-direction: column; align-items: center; }
+      .trust-pill-text { font-size: 0.78rem; }
 
       .section-header { margin-bottom: 2rem; }
       .container { padding: 0 1.25rem; }
@@ -1809,48 +1833,65 @@
 
     /* ── S1C: Gold line accent after eyebrow ─────────────────────────────── */
     .hero-line-accent {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      margin-bottom: 0.25rem;
+      display: block;
+      margin-bottom: 1.5rem;
     }
     .hero-line-accent-bar {
-      width: 40px;
+      width: 48px;
       height: 2px;
       background: var(--gold);
-      flex-shrink: 0;
+      display: block;
     }
-    .hero-line-accent-dot {
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background: var(--gold);
-      flex-shrink: 0;
-    }
+    .hero-line-accent-dot { display: none; }
 
     /* ── S1D: Hero H1 sizing ─────────────────────────────────────────────── */
     .hero-h1-line1 {
-      font-size: clamp(3rem, 7vw, 5.5rem);
-      line-height: 0.92;
+      font-size: clamp(5rem, 9vw, 8rem);
+      line-height: 0.88;
+      font-family: var(--font-display);
+      text-transform: uppercase;
+      color: var(--cream);
+      letter-spacing: 0.01em;
+    }
+    .hero-h1-b1 {
+      font-family: var(--font-display);
+      font-size: clamp(5rem, 9vw, 8rem);
+      line-height: 0.88;
+      letter-spacing: 0.01em;
+      text-transform: uppercase;
+      color: var(--cream);
+      display: block;
+      animation: wordReveal 0.6s ease-out 0.16s both;
     }
     .hero-h1-line2 {
-      font-size: clamp(2.2rem, 5vw, 4rem);
-      line-height: 0.92;
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      line-height: 1.0;
+      font-family: var(--font-serif);
+      font-style: italic;
+      color: var(--gold);
+      text-transform: none;
+      margin-top: 0.15em;
+    }
+    .hero-h1-b2 {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      line-height: 1.0;
+      color: var(--gold);
+      text-transform: none;
+      display: block;
+      animation: wordReveal 0.6s ease-out 0.5s both;
     }
 
-    /* ── S2: Section transitions — diagonal cuts ─────────────────────────── */
+    /* ── S2: Section transitions ─────────────────────────────────────────── */
     .trust-section {
-      clip-path: polygon(0 3%, 100% 0%, 100% 100%, 0% 100%);
-      margin-top: -3vw;
-      padding-top: calc(3vw + 2.5rem);
+      clip-path: none;
+      margin-top: 0;
+      padding: 2rem 2rem;
     }
 
     .trust-servicios-sep {
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--gold) 30%, var(--gold) 70%, transparent);
-      opacity: 0.3;
-      max-width: 600px;
-      margin: 0 auto;
+      display: none;
     }
 
     .proceso-section {
@@ -2010,7 +2051,7 @@
       .trust-section {
         clip-path: none;
         margin-top: 0;
-        padding-top: 2.5rem;
+        padding: 2rem 1.25rem;
       }
       .proceso-section {
         clip-path: none;
@@ -2117,7 +2158,7 @@
     }
 
     /* CHANGE 2: Hero improvements */
-    .hero-inner { grid-template-columns: 62% 38%; }
+    .hero-inner { grid-template-columns: 55% 45%; }
 
     .hero-watermark {
       font-size: clamp(18rem, 40vw, 32rem);
@@ -2129,12 +2170,8 @@
     }
 
     .badge-pill {
-      background: linear-gradient(90deg,
-        rgba(245,197,24,0.08) 0%,
-        rgba(245,197,24,0.18) 50%,
-        rgba(245,197,24,0.08) 100%);
-      background-size: 200% auto;
-      animation: shimmer 3s linear infinite;
+      background: transparent;
+      animation: none;
     }
 
     .mascot-img {
@@ -2148,7 +2185,7 @@
     .categoria-card[data-cat="A"] {
       grid-column: 1 / -1;
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1.2fr 1fr;
       gap: 3rem;
       align-items: start;
     }
@@ -2156,6 +2193,7 @@
       .categoria-card[data-cat="A"] {
         grid-column: 1;
         grid-template-columns: 1fr;
+        gap: 1rem;
       }
     }
 
@@ -2269,7 +2307,8 @@
 
     /* prefers-reduced-motion for new animations */
     @media (prefers-reduced-motion: reduce) {
-      .badge-pill { animation: none; background: rgba(245,197,24,0.1); }
+      .badge-pill { animation: none; }
+      .hero-h1-b1, .hero-h1-b2 { animation: none; opacity: 1; }
       .mascot-img { animation: none; opacity: 1; }
     }
 
@@ -2379,16 +2418,17 @@
 
       <div class="hero-inner">
         <div class="hero-left">
-          <p class="hero-eyebrow">Tax &amp; Business Services</p>
+          <p class="hero-eyebrow">Tax &amp; Business Services · Florida</p>
 
           <div class="hero-line-accent" aria-hidden="true">
             <span class="hero-line-accent-bar"></span>
-            <span class="hero-line-accent-dot"></span>
           </div>
 
           <h1 id="hero-heading" class="hero-h1">
-            <span class="hero-h1-line1">TUS TAXES Y TU NEGOCIO,</span>
-            <span class="hero-h1-line2">en las mejores manos.</span>
+            <span class="hero-h1-line1">TUS TAXES</span>
+            <span class="hero-h1-b1">Y TU NEGOCIO,</span>
+            <span class="hero-h1-line2">en las mejores</span>
+            <span class="hero-h1-b2">manos.</span>
           </h1>
 
           <p class="hero-sub">Te ayudamos a organizar tus taxes, crear tu negocio y manejar tus trámites fiscales con confianza. En español, paso a paso, sin complicaciones.</p>
@@ -2459,22 +2499,22 @@
     <section id="confianza"
              class="trust-section"
              aria-label="Razones para confiar en nosotros">
-      <ul class="trust-pills stagger-group" role="list">
-        <li class="trust-pill reveal" role="listitem">
-          <svg class="trust-pill-icon" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="#B8860B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          Atención en español e inglés
+      <ul class="trust-pills" role="list">
+        <li class="trust-pill" role="listitem">
+          <svg class="trust-pill-icon" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M3 9l4 4L15 4" stroke="#F5C518" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="trust-pill-text">Atención en español e inglés</span>
         </li>
-        <li class="trust-pill reveal" role="listitem">
-          <svg class="trust-pill-icon" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="#B8860B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          Respuesta rápida por WhatsApp
+        <li class="trust-pill" role="listitem">
+          <svg class="trust-pill-icon" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M3 9l4 4L15 4" stroke="#F5C518" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="trust-pill-text">Respuesta en menos de 2 horas</span>
         </li>
-        <li class="trust-pill reveal" role="listitem">
-          <svg class="trust-pill-icon" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="#B8860B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          Sin importar tu situación migratoria
+        <li class="trust-pill trust-pill-featured" role="listitem">
+          <svg class="trust-pill-icon" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M3 9l4 4L15 4" stroke="#F5C518" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="trust-pill-text">Sin importar tu situación migratoria</span>
         </li>
-        <li class="trust-pill reveal" role="listitem">
-          <svg class="trust-pill-icon" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7l3.5 3.5L12 3" stroke="#B8860B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          Te guiamos paso a paso
+        <li class="trust-pill" role="listitem">
+          <svg class="trust-pill-icon" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M3 9l4 4L15 4" stroke="#F5C518" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="trust-pill-text">Te guiamos paso a paso</span>
         </li>
       </ul>
     </section>
@@ -2487,7 +2527,7 @@
              class="servicios-section"
              aria-labelledby="servicios-heading">
       <div class="section-header reveal">
-        <p class="section-eyebrow">Opción 01</p>
+        <p class="section-eyebrow">Servicios</p>
         <h2 id="servicios-heading" class="section-headline">NUESTROS <span class="serif-accent">Servicios</span></h2>
         <p class="section-sub">Cada trámite tiene su proceso. Te explicamos todo en español, desde el principio hasta que tengas tus documentos listos.</p>
       </div>
