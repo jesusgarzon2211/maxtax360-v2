@@ -79,6 +79,10 @@
       0%, 100% { transform: scale(1); opacity: 1; }
       50%       { transform: scale(1.4); opacity: 0.5; }
     }
+    @keyframes navSlideDown {
+      from { opacity: 0; transform: translateY(-100%); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
 
     /* ═══════════════════════════════
        SCROLL REVEAL
@@ -108,27 +112,30 @@
       left: 0;
       width: 100%;
       z-index: 1000;
-      background: rgba(0,0,0,0.15);
-      padding: 1.5rem 2rem;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      background: #0A0A0A;
+      padding: 1rem 2rem;
+      transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+      animation: navSlideDown 0.6s ease-out both;
     }
     #navbar.scrolled {
-      background: rgba(250,246,237,0.92);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      background: rgba(250,246,237,0.96);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border-radius: 99px;
       width: calc(100% - 3rem);
       left: 1.5rem;
       right: 1.5rem;
       top: 0.75rem;
-      padding: 0.65rem 1.5rem;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.04);
+      padding: 0.6rem 1.5rem;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.1), 0 0 0 1px rgba(0,0,0,0.05);
     }
-    #navbar.scrolled .nav-links a { color: rgba(10,10,10,0.6); }
+    #navbar.scrolled .nav-links a { color: rgba(10,10,10,0.55); }
     #navbar.scrolled .nav-links a:hover { color: #0A0A0A; }
     #navbar.scrolled .nav-logo { color: #0A0A0A; }
+    #navbar.scrolled .nav-logo .logo-tax { color: var(--gold); }
+    #navbar.scrolled .hamburger span { background: #0A0A0A; }
     #navbar.scrolled .nav-cta { background: #0A0A0A; color: #FAF6ED; }
-    #navbar.scrolled .nav-cta:hover { background: #F5C518; color: #0A0A0A; }
+    #navbar.scrolled .nav-cta:hover { background: var(--gold); color: #0A0A0A; }
     .nav-inner {
       max-width: var(--container);
       margin: 0 auto;
@@ -146,9 +153,9 @@
       align-items: baseline;
       flex-shrink: 0;
     }
-    .logo-max { color: #0A0A0A; }
+    .logo-max { color: var(--cream); }
     .logo-tax { color: var(--gold); }
-    .logo-deg { color: #0A0A0A; }
+    .logo-deg { color: var(--cream); }
     .nav-links {
       display: flex;
       align-items: center;
@@ -159,11 +166,11 @@
       font-weight: 500;
       font-size: 0.75rem;
       letter-spacing: 0.2em;
-      color: #2A2A2A;
+      color: rgba(250,246,237,0.75);
       text-transform: uppercase;
       transition: color 0.2s ease;
     }
-    .nav-links a:hover { color: var(--gold); }
+    .nav-links a:hover { color: var(--cream); }
     .nav-cta {
       display: inline-flex;
       align-items: center;
@@ -199,7 +206,7 @@
       display: block;
       width: 22px;
       height: 2px;
-      background: var(--black);
+      background: var(--cream);
       border-radius: 2px;
       transition: all 0.3s ease;
     }
@@ -272,6 +279,7 @@
       border-bottom: 1px solid rgba(245,197,24,0.08);
       position: relative;
       z-index: 1;
+      margin-top: 60px;
     }
     .ticker-track {
       display: flex;
@@ -311,12 +319,12 @@
     }
     .hero-blob {
       position: absolute;
-      top: -5%;
-      right: -3%;
-      width: 52%;
-      height: 115%;
+      top: -8%;
+      right: -4%;
+      width: 50%;
+      height: 118%;
       background: #0A0A0A;
-      border-radius: 42% 0% 0% 38% / 0% 0% 100% 100%;
+      border-radius: 48% 0% 0% 44% / 5% 0% 100% 95%;
       z-index: 0;
       pointer-events: none;
     }
@@ -408,7 +416,7 @@
       align-items: center;
       gap: 0.35rem;
       background: rgba(10,10,10,0.04);
-      border: 1px solid rgba(10,10,10,0.12);
+      border: 1px solid rgba(10,10,10,0.1);
       border-radius: 99px;
       padding: 0.3rem 0.9rem;
       font-family: var(--font-mono);
@@ -746,6 +754,16 @@
     }
     .trust-item:has(.trust-text--gold) { color: var(--gold); }
     .trust-item:has(.trust-text--gold) svg { filter: drop-shadow(0 0 6px rgba(245,197,24,0.4)); }
+    .trust-item.trust-highlight {
+      background: rgba(245,197,24,0.08);
+      border: 1px solid rgba(245,197,24,0.2);
+      border-radius: 99px;
+      padding: 0.6rem 1.25rem;
+      color: var(--gold);
+    }
+    .trust-item.trust-highlight svg {
+      filter: drop-shadow(0 0 4px rgba(245,197,24,0.4));
+    }
 
     /* ═══════════════════════════════
        MOBILE
@@ -1196,7 +1214,7 @@
   ═══════════════════════════════ */
   #servicios {
     background: var(--cream);
-    padding: 5rem 2rem 6rem;
+    padding: 4rem 2rem 6rem;
   }
   .servicios-header {
     max-width: 1200px;
@@ -1235,12 +1253,30 @@
     left: 0;
     top: 0;
     bottom: 0;
-    width: 4px;
+    width: 3px;
+    border-radius: 0 2px 2px 0;
+    opacity: 1;
   }
   .accent-gold::before   { background: #F5C518; }
   .accent-blue::before   { background: #3B82F6; }
   .accent-purple::before { background: #8B5CF6; }
   .accent-green::before  { background: #22C55E; }
+
+  /* Ghost number */
+  .service-card::after {
+    content: attr(data-num);
+    position: absolute;
+    top: -0.5rem;
+    right: 0.75rem;
+    font-family: var(--font-display);
+    font-size: 5rem;
+    opacity: 0.04;
+    color: #000;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+  }
 
   /* Card header */
   .svc-header {
@@ -1595,7 +1631,7 @@
 
     <!-- 01 — CREACIÓN DE EMPRESA (full width, gold) -->
     <div class="service-card service-card--full accent-gold reveal"
-         role="button" tabindex="0" aria-expanded="false">
+         role="button" tabindex="0" aria-expanded="false" data-num="01">
       <div class="svc-header">
         <span class="svc-num">01</span>
         <span class="svc-icon">
@@ -1643,7 +1679,7 @@
 
     <!-- 02 — TAXES (blue) -->
     <div class="service-card accent-blue reveal"
-         role="button" tabindex="0" aria-expanded="false">
+         role="button" tabindex="0" aria-expanded="false" data-num="02">
       <div class="svc-header">
         <span class="svc-num">02</span>
         <span class="svc-icon">
@@ -1694,7 +1730,7 @@
 
     <!-- 03 — ITIN (purple) -->
     <div class="service-card accent-purple reveal"
-         role="button" tabindex="0" aria-expanded="false">
+         role="button" tabindex="0" aria-expanded="false" data-num="03">
       <div class="svc-header">
         <span class="svc-num">03</span>
         <span class="svc-icon">
@@ -1742,7 +1778,7 @@
 
     <!-- 04 — BUSINESS SERVICES (green) -->
     <div class="service-card accent-green reveal"
-         role="button" tabindex="0" aria-expanded="false">
+         role="button" tabindex="0" aria-expanded="false" data-num="04">
       <div class="svc-header">
         <span class="svc-num">04</span>
         <span class="svc-icon">
@@ -1914,62 +1950,6 @@
   </div>
 </section>
 
-<script>
-  /* ─── SERVICE CARDS ACCORDION ─── */
-  (function () {
-    function openCard(card) {
-      var body = card.querySelector('.svc-body');
-      card.classList.add('open');
-      card.setAttribute('aria-expanded', 'true');
-      body.style.maxHeight = body.scrollHeight + 'px';
-    }
-    function closeCard(card) {
-      var body = card.querySelector('.svc-body');
-      card.classList.remove('open');
-      card.setAttribute('aria-expanded', 'false');
-      body.style.maxHeight = '0';
-    }
-
-    var cards = document.querySelectorAll('.service-card');
-
-    cards.forEach(function (card) {
-      card.addEventListener('click', function (e) {
-        if (e.target.closest('a')) return;
-        var isOpen = card.classList.contains('open');
-        cards.forEach(closeCard);
-        if (!isOpen) openCard(card);
-      });
-      card.addEventListener('keydown', function (e) {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          card.click();
-        }
-      });
-    });
-
-    /* Auto-open first card after 1.2s */
-    setTimeout(function () {
-      var firstCard = document.querySelector('.service-card');
-      if (firstCard) openCard(firstCard);
-    }, 1200);
-  })();
-
-  /* ─── COUNTER ANIMATION TRIGGER ─── */
-  (function () {
-    var counterEls = document.querySelectorAll('[data-target]');
-    if (!counterEls.length) return;
-    var counterObserver = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting && !entry.target.dataset.animated) {
-          entry.target.dataset.animated = 'true';
-          animateCounter(entry.target);
-          counterObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.5 });
-    counterEls.forEach(function (el) { counterObserver.observe(el); });
-  })();
-</script>
 
 
 <style>
@@ -3074,11 +3054,8 @@
     card.addEventListener('click', function (e) {
       if (e.target.closest('a')) return;
       var isOpen = card.classList.contains('open');
-      if (isOpen) {
-        closeBkCard(card);
-      } else {
-        openBkCard(card);
-      }
+      bkCards.forEach(closeBkCard);
+      if (!isOpen) openBkCard(card);
     });
     card.addEventListener('keydown', function (e) {
       if (e.key === 'Enter' || e.key === ' ') {
