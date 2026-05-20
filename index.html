@@ -112,7 +112,7 @@
       left: 0;
       width: 100%;
       z-index: 1000;
-      background: transparent;
+      background: #0A0A0A;
       padding: 1rem 2rem;
       transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1);
       animation: navSlideDown 0.6s ease-out both;
@@ -156,9 +156,9 @@
       align-items: baseline;
       flex-shrink: 0;
     }
-    .logo-max { color: #0A0A0A; }
+    .logo-max { color: var(--cream); }
     .logo-tax { color: var(--gold); }
-    .logo-deg { color: #0A0A0A; }
+    .logo-deg { color: var(--cream); }
     .nav-links {
       display: flex;
       align-items: center;
@@ -169,11 +169,11 @@
       font-weight: 500;
       font-size: 0.75rem;
       letter-spacing: 0.2em;
-      color: rgba(10,10,10,0.6);
+      color: rgba(250,246,237,0.7);
       text-transform: uppercase;
       transition: color 0.2s ease;
     }
-    .nav-links a:hover { color: #0A0A0A; }
+    .nav-links a:hover { color: var(--cream); }
     .nav-cta {
       display: inline-flex;
       align-items: center;
@@ -209,7 +209,7 @@
       display: block;
       width: 22px;
       height: 2px;
-      background: #0A0A0A;
+      background: var(--cream);
       border-radius: 2px;
       transition: all 0.3s ease;
     }
@@ -283,7 +283,7 @@
       border-bottom: 1px solid rgba(245,197,24,0.08);
       position: relative;
       z-index: 1;
-      margin-top: 60px;
+      margin-top: 64px;
     }
     .ticker-track {
       display: flex;
@@ -1088,28 +1088,6 @@
     }, { passive: true });
   })();
 
-  /* ─── HAMBURGER MENU ─── */
-  (function () {
-    var hamburger = document.querySelector('.hamburger');
-    var navDrawer = document.getElementById('nav-drawer');
-
-    hamburger.addEventListener('click', function () {
-      var isOpen = hamburger.classList.toggle('open');
-      navDrawer.classList.toggle('open');
-      document.body.classList.toggle('no-scroll');
-      hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-    });
-
-    document.querySelectorAll('.nav-drawer a').forEach(function (link) {
-      link.addEventListener('click', function () {
-        hamburger.classList.remove('open');
-        navDrawer.classList.remove('open');
-        document.body.classList.remove('no-scroll');
-        hamburger.setAttribute('aria-expanded', 'false');
-      });
-    });
-  })();
-
   /* ─── SCROLL REVEAL ─── */
   (function () {
     var revealElements = document.querySelectorAll('.reveal');
@@ -1174,7 +1152,7 @@
   .wave-separator svg {
     display: block;
     width: 100%;
-    height: 60px;
+    height: 80px;
   }
   .wave-dark-to-cream { background: #0A0A0A; }
 
@@ -1256,6 +1234,17 @@
     border-right: 1px solid rgba(245,197,24,0.25);
   }
 
+  /* Gold diagonal accent line */
+  .gold-diagonal {
+    position: absolute;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .gold-diagonal svg {
+    display: block;
+  }
+
   .section-eyebrow-line {
     display: block;
     width: 48px;
@@ -1299,25 +1288,31 @@
     margin: 0 auto 3rem;
   }
   .services-grid {
-    max-width: 1200px;
+    max-width: 860px;
     margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
   }
   .service-card {
     background: #FFFFFF;
     border: 1px solid rgba(0,0,0,0.06);
     border-radius: 16px;
     overflow: hidden;
-    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
     cursor: pointer;
     position: relative;
   }
   .service-card:hover {
-    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
-    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(0,0,0,0.07);
   }
+  .service-card.open {
+    box-shadow: 0 8px 32px rgba(0,0,0,0.09);
+  }
+  .service-card.accent-gold.open { border-color: rgba(245,197,24,0.35); }
+  .service-card.accent-blue.open { border-color: rgba(59,130,246,0.35); }
+  .service-card.accent-purple.open { border-color: rgba(139,92,246,0.35); }
+  .service-card.accent-green.open { border-color: rgba(34,197,94,0.35); }
   .service-card--full { grid-column: auto; }
 
   /* Left accent stripe */
@@ -1729,7 +1724,7 @@
      WAVE — dark → cream
 ═══════════════════════════════════════════ -->
 <div class="wave-separator wave-dark-to-cream" aria-hidden="true">
-  <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M0,0 C360,60 1080,0 1440,40 L1440,60 L0,60 Z" fill="#FAF6ED"/>
   </svg>
 </div>
@@ -1955,8 +1950,8 @@
      WAVE — cream → dark
 ═══════════════════════════════════════════ -->
 <div class="wave-separator" style="background:#FAF6ED" aria-hidden="true">
-  <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M0,40 C360,0 1080,60 1440,20 L1440,60 L0,60 Z" fill="#0A0A0A"/>
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,50 C360,0 1080,80 1440,25 L1440,80 L0,80 Z" fill="#0A0A0A"/>
   </svg>
 </div>
 
@@ -1999,8 +1994,8 @@
      WAVE — dark → cream
 ═══════════════════════════════════════════ -->
 <div class="wave-separator" style="background:#0A0A0A" aria-hidden="true">
-  <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M0,20 C360,60 1080,0 1440,40 L1440,60 L0,60 Z" fill="#FAF6ED"/>
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,25 C360,80 1080,0 1440,50 L1440,80 L0,80 Z" fill="#FAF6ED"/>
   </svg>
 </div>
 
@@ -2656,8 +2651,8 @@
      WAVE — cream → dark (before bookkeeping)
 ═══════════════════════════════════════════ -->
 <div class="wave-separator" style="background:#FAF6ED" aria-hidden="true">
-  <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M0,40 C360,0 1080,60 1440,20 L1440,60 L0,60 Z" fill="#0A0A0A"/>
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,50 C360,0 1080,80 1440,25 L1440,80 L0,80 Z" fill="#0A0A0A"/>
   </svg>
 </div>
 
@@ -2809,8 +2804,8 @@
      WAVE — dark → cream (before FAQ)
 ═══════════════════════════════════════════ -->
 <div class="wave-separator" style="background:#0A0A0A" aria-hidden="true">
-  <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M0,20 C360,60 1080,0 1440,40 L1440,60 L0,60 Z" fill="#FAF6ED"/>
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,25 C360,80 1080,0 1440,50 L1440,80 L0,80 Z" fill="#FAF6ED"/>
   </svg>
 </div>
 
@@ -2912,8 +2907,8 @@
      WAVE — cream → dark (before contacto)
 ═══════════════════════════════════════════ -->
 <div class="wave-separator" style="background:#FAF6ED" aria-hidden="true">
-  <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M0,40 C360,0 1080,60 1440,20 L1440,60 L0,60 Z" fill="#0A0A0A"/>
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,50 C360,0 1080,80 1440,25 L1440,80 L0,80 Z" fill="#0A0A0A"/>
   </svg>
 </div>
 
