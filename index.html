@@ -342,6 +342,21 @@
       z-index: 1;
       pointer-events: none;
     }
+    /* Gold architectural accent lines */
+    .gold-line-h {
+      position: absolute;
+      pointer-events: none;
+      z-index: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, rgba(245,197,24,0.4) 30%, rgba(245,197,24,0.4) 70%, transparent 100%);
+    }
+    .gold-line-v {
+      position: absolute;
+      pointer-events: none;
+      z-index: 1;
+      width: 1px;
+      background: linear-gradient(180deg, transparent 0%, rgba(245,197,24,0.35) 30%, rgba(245,197,24,0.35) 70%, transparent 100%);
+    }
     .hero-container {
       position: relative;
       z-index: 2;
@@ -714,8 +729,8 @@
     #confianza {
       background: #111111;
       padding: 2.5rem 2rem;
-      border-top: 1px solid rgba(245,197,24,0.06);
-      border-bottom: 1px solid rgba(245,197,24,0.06);
+      border-top: 1px solid rgba(245,197,24,0.15);
+      border-bottom: 1px solid rgba(245,197,24,0.15);
       clip-path: none;
       margin-top: 0;
     }
@@ -923,6 +938,9 @@
   <!-- Organic black blob — right side shape element -->
   <div class="hero-blob" aria-hidden="true"></div>
   <div class="hero-glow" aria-hidden="true"></div>
+  <!-- Gold accent lines — architectural texture -->
+  <div class="gold-line-h" style="bottom:15%;left:5%;width:120px;" aria-hidden="true"></div>
+  <div class="gold-line-v" style="top:20%;left:calc(50% - 2px);height:80px;" aria-hidden="true"></div>
 
   <div class="hero-container">
 
@@ -1155,6 +1173,21 @@
     height: 80px;
   }
   .wave-dark-to-cream { background: #0A0A0A; }
+  .wave-cream-to-dark { background: var(--cream); }
+  /* Gold shimmer on wave edges */
+  .wave-separator--gold-edge {
+    position: relative;
+  }
+  .wave-separator--gold-edge::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 10%;
+    right: 10%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(245,197,24,0.3) 30%, rgba(245,197,24,0.3) 70%, transparent);
+    z-index: 2;
+  }
 
   /* ═══════════════════════════════
      CREDENCIALES MARQUEE
@@ -1220,18 +1253,18 @@
   .gold-corner-accent--tl {
     top: 3rem;
     left: 2rem;
-    width: 60px;
-    height: 60px;
-    border-top: 1px solid rgba(245,197,24,0.25);
-    border-left: 1px solid rgba(245,197,24,0.25);
+    width: 80px;
+    height: 80px;
+    border-top: 1.5px solid rgba(245,197,24,0.35);
+    border-left: 1.5px solid rgba(245,197,24,0.35);
   }
   .gold-corner-accent--br {
     bottom: 3rem;
     right: 2rem;
-    width: 60px;
-    height: 60px;
-    border-bottom: 1px solid rgba(245,197,24,0.25);
-    border-right: 1px solid rgba(245,197,24,0.25);
+    width: 80px;
+    height: 80px;
+    border-bottom: 1.5px solid rgba(245,197,24,0.35);
+    border-right: 1.5px solid rgba(245,197,24,0.35);
   }
 
   /* Gold diagonal accent line */
@@ -1247,10 +1280,11 @@
 
   .section-eyebrow-line {
     display: block;
-    width: 48px;
+    width: 56px;
     height: 2px;
-    background: var(--gold);
+    background: linear-gradient(90deg, var(--gold), rgba(245,197,24,0.4));
     margin-bottom: 1.2rem;
+    border-radius: 1px;
   }
   .section-headline { line-height: 0.92; margin-bottom: 1rem; }
   .hl-display {
@@ -1282,6 +1316,8 @@
   #servicios {
     background: var(--cream);
     padding: 4rem 2rem 6rem;
+    position: relative;
+    overflow: hidden;
   }
   .servicios-header {
     max-width: 1200px;
@@ -1490,7 +1526,22 @@
   #stats {
     background: var(--black);
     padding: 5rem 2rem;
+    position: relative;
+    overflow: hidden;
   }
+  #stats::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 700px;
+    height: 500px;
+    background: radial-gradient(ellipse at center, rgba(245,197,24,0.055) 0%, transparent 65%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  #stats > * { position: relative; z-index: 1; }
   .stats-eyebrow {
     font-family: var(--font-mono);
     font-size: 0.55rem;
@@ -1555,6 +1606,15 @@
     margin: 3rem auto 0;
     text-align: center;
     line-height: 1.65;
+  }
+  /* Decorative gold rule */
+  .gold-rule {
+    display: block;
+    width: 100%;
+    max-width: 160px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(245,197,24,0.4), transparent);
+    margin: 0 auto;
   }
 
   /* ═══════════════════════════════
@@ -1725,7 +1785,7 @@
 ═══════════════════════════════════════════ -->
 <div class="wave-separator wave-dark-to-cream" aria-hidden="true">
   <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M0,0 C360,60 1080,0 1440,40 L1440,60 L0,60 Z" fill="#FAF6ED"/>
+    <path d="M0,25 C360,80 1080,0 1440,50 L1440,80 L0,80 Z" fill="#FAF6ED"/>
   </svg>
 </div>
 
@@ -1747,7 +1807,7 @@
   <div class="services-grid" style="position:relative;z-index:1">
 
     <!-- 01 — CREACIÓN DE EMPRESA (gold) -->
-    <div class="service-card accent-gold reveal"
+    <div class="service-card accent-gold"
          role="button" tabindex="0" aria-expanded="false" data-num="01">
       <div class="svc-header">
         <span class="svc-num">01</span>
@@ -1795,7 +1855,7 @@
     </div>
 
     <!-- 02 — TAXES (blue) -->
-    <div class="service-card accent-blue reveal"
+    <div class="service-card accent-blue"
          role="button" tabindex="0" aria-expanded="false" data-num="02">
       <div class="svc-header">
         <span class="svc-num">02</span>
@@ -1846,7 +1906,7 @@
     </div>
 
     <!-- 03 — ITIN (purple) -->
-    <div class="service-card accent-purple reveal"
+    <div class="service-card accent-purple"
          role="button" tabindex="0" aria-expanded="false" data-num="03">
       <div class="svc-header">
         <span class="svc-num">03</span>
@@ -1894,7 +1954,7 @@
     </div>
 
     <!-- 04 — BUSINESS SERVICES (green) -->
-    <div class="service-card accent-green reveal"
+    <div class="service-card accent-green"
          role="button" tabindex="0" aria-expanded="false" data-num="04">
       <div class="svc-header">
         <span class="svc-num">04</span>
@@ -1949,7 +2009,7 @@
 <!-- ═══════════════════════════════════════════
      WAVE — cream → dark
 ═══════════════════════════════════════════ -->
-<div class="wave-separator" style="background:#FAF6ED" aria-hidden="true">
+<div class="wave-separator wave-separator--gold-edge" style="background:#FAF6ED" aria-hidden="true">
   <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M0,50 C360,0 1080,80 1440,25 L1440,80 L0,80 Z" fill="#0A0A0A"/>
   </svg>
@@ -1959,6 +2019,7 @@
      SECTION 6 — STATS / IMPACTO
 ═══════════════════════════════════════════ -->
 <section id="stats" aria-label="Por qué nos eligen">
+  <div style="width:40px;height:1.5px;background:linear-gradient(90deg,transparent,rgba(245,197,24,0.7),transparent);margin:0 auto 1.25rem;" aria-hidden="true"></div>
   <p class="stats-eyebrow">Por qué nos eligen</p>
   <div class="stats-grid stagger-group">
 
@@ -1987,13 +2048,14 @@
     </div>
 
   </div>
+  <div class="gold-rule" aria-hidden="true"></div>
   <p class="stats-quote reveal">"No importa si llevas años en EE.UU. o llegaste hace poco — aquí te atendemos con respeto y profesionalismo."</p>
 </section>
 
 <!-- ═══════════════════════════════════════════
      WAVE — dark → cream
 ═══════════════════════════════════════════ -->
-<div class="wave-separator" style="background:#0A0A0A" aria-hidden="true">
+<div class="wave-separator wave-separator--gold-edge" style="background:#0A0A0A" aria-hidden="true">
   <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M0,25 C360,80 1080,0 1440,50 L1440,80 L0,80 Z" fill="#FAF6ED"/>
   </svg>
@@ -2650,7 +2712,7 @@
 <!-- ═══════════════════════════════════════════
      WAVE — cream → dark (before bookkeeping)
 ═══════════════════════════════════════════ -->
-<div class="wave-separator" style="background:#FAF6ED" aria-hidden="true">
+<div class="wave-separator wave-separator--gold-edge" style="background:#FAF6ED" aria-hidden="true">
   <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M0,50 C360,0 1080,80 1440,25 L1440,80 L0,80 Z" fill="#0A0A0A"/>
   </svg>
@@ -2803,7 +2865,7 @@
 <!-- ═══════════════════════════════════════════
      WAVE — dark → cream (before FAQ)
 ═══════════════════════════════════════════ -->
-<div class="wave-separator" style="background:#0A0A0A" aria-hidden="true">
+<div class="wave-separator wave-separator--gold-edge" style="background:#0A0A0A" aria-hidden="true">
   <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M0,25 C360,80 1080,0 1440,50 L1440,80 L0,80 Z" fill="#FAF6ED"/>
   </svg>
@@ -2906,7 +2968,7 @@
 <!-- ═══════════════════════════════════════════
      WAVE — cream → dark (before contacto)
 ═══════════════════════════════════════════ -->
-<div class="wave-separator" style="background:#FAF6ED" aria-hidden="true">
+<div class="wave-separator wave-separator--gold-edge" style="background:#FAF6ED" aria-hidden="true">
   <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M0,50 C360,0 1080,80 1440,25 L1440,80 L0,80 Z" fill="#0A0A0A"/>
   </svg>
