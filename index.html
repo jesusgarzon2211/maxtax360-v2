@@ -112,7 +112,7 @@
       left: 0;
       width: 100%;
       z-index: 1000;
-      background: #0A0A0A;
+      background: transparent;
       padding: 1rem 2rem;
       transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1);
       animation: navSlideDown 0.6s ease-out both;
@@ -136,6 +136,9 @@
     #navbar.scrolled .hamburger span { background: #0A0A0A; }
     #navbar.scrolled .nav-cta { background: #0A0A0A; color: #FAF6ED; }
     #navbar.scrolled .nav-cta:hover { background: var(--gold); color: #0A0A0A; }
+    #navbar.scrolled .logo-max { color: #0A0A0A; }
+    #navbar.scrolled .logo-tax { color: var(--gold); }
+    #navbar.scrolled .logo-deg { color: #0A0A0A; }
     .nav-inner {
       max-width: var(--container);
       margin: 0 auto;
@@ -153,9 +156,9 @@
       align-items: baseline;
       flex-shrink: 0;
     }
-    .logo-max { color: var(--cream); }
+    .logo-max { color: #0A0A0A; }
     .logo-tax { color: var(--gold); }
-    .logo-deg { color: var(--cream); }
+    .logo-deg { color: #0A0A0A; }
     .nav-links {
       display: flex;
       align-items: center;
@@ -166,11 +169,11 @@
       font-weight: 500;
       font-size: 0.75rem;
       letter-spacing: 0.2em;
-      color: rgba(250,246,237,0.75);
+      color: rgba(10,10,10,0.6);
       text-transform: uppercase;
       transition: color 0.2s ease;
     }
-    .nav-links a:hover { color: var(--cream); }
+    .nav-links a:hover { color: #0A0A0A; }
     .nav-cta {
       display: inline-flex;
       align-items: center;
@@ -206,7 +209,7 @@
       display: block;
       width: 22px;
       height: 2px;
-      background: var(--cream);
+      background: #0A0A0A;
       border-radius: 2px;
       transition: all 0.3s ease;
     }
@@ -216,7 +219,7 @@
 
     /* Mobile drawer */
     .nav-drawer {
-      display: none;
+      display: flex;
       position: fixed;
       inset: 0;
       background: var(--cream);
@@ -226,12 +229,14 @@
       justify-content: center;
       gap: 2rem;
       opacity: 0;
+      visibility: hidden;
       transform: translateY(-16px);
-      transition: opacity 0.3s ease, transform 0.3s ease;
+      transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
       pointer-events: none;
     }
     .nav-drawer.open {
       opacity: 1;
+      visibility: visible;
       transform: translateY(0);
       pointer-events: all;
     }
@@ -266,7 +271,6 @@
       .nav-links,
       .nav-cta { display: none; }
       .hamburger { display: flex; }
-      .nav-drawer { display: flex; }
     }
 
     /* ═══════════════════════════════
@@ -352,6 +356,7 @@
       padding: 4rem 3rem 4rem 10%;
       position: relative;
       z-index: 2;
+      overflow: visible;
     }
     .hero-right {
       position: relative;
@@ -374,9 +379,10 @@
     }
     .hero-h1-block {
       font-family: var(--font-display);
-      font-size: clamp(3.5rem, 6vw, 6rem);
+      font-size: clamp(3.5rem, 7.5vw, 7rem);
       color: #0A0A0A;
       line-height: 0.88;
+      letter-spacing: -0.01em;
       text-transform: uppercase;
       display: block;
     }
@@ -781,11 +787,12 @@
         padding: 0.5rem 1.25rem;
       }
       .hero-blob {
-        width: 100%;
-        height: 35%;
-        top: 0;
-        right: 0;
-        border-radius: 0 0 50% 50% / 0 0 30% 30%;
+        top: auto;
+        bottom: -5%;
+        right: -10%;
+        width: 70%;
+        height: 45%;
+        border-radius: 50% 0% 0% 50% / 50% 0% 100% 50%;
       }
       .hero-right { display: none; }
       .hero-container {
@@ -793,19 +800,18 @@
         min-height: auto;
       }
       .hero-left {
-        padding: 2rem 1.5rem;
+        padding: 2rem 1.5rem 3rem;
         padding-top: 100px;
       }
       .hero-h1-block {
         font-size: clamp(2.8rem, 9vw, 5rem);
+        color: #0A0A0A;
       }
       .hero-h1-serif {
         font-size: clamp(1.6rem, 6vw, 2.5rem);
+        color: #0A0A0A;
       }
-      .hero-right {
-        padding: 1.5rem;
-        min-height: 300px;
-      }
+      .hero-sub { color: rgba(10,10,10,0.55); max-width: 100%; }
       .hero-cards {
         height: 260px;
       }
@@ -825,9 +831,6 @@
         gap: 1.5rem;
         justify-items: center;
       }
-      .hero-h1-block { font-size: clamp(2.5rem, 10vw, 4rem); color: #0A0A0A; }
-      .hero-h1-serif { font-size: clamp(1.8rem, 7vw, 3rem); color: #0A0A0A; }
-      .hero-sub { color: rgba(10,10,10,0.55); max-width: 100%; }
       .hero-urgency-text { color: rgba(10,10,10,0.4); }
     }
 
@@ -1176,8 +1179,83 @@
   .wave-dark-to-cream { background: #0A0A0A; }
 
   /* ═══════════════════════════════
+     CREDENCIALES MARQUEE
+  ═══════════════════════════════ */
+  @keyframes marquee-cred {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  .cred-marquee {
+    background: #0A0A0A;
+    padding: 1.5rem 0;
+    overflow: hidden;
+    border-top: 1px solid rgba(245,197,24,0.08);
+    border-bottom: 1px solid rgba(245,197,24,0.08);
+  }
+  .cred-marquee-track {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    width: max-content;
+    animation: marquee-cred 35s linear infinite;
+  }
+  .cred-marquee-track:hover { animation-play-state: paused; }
+  .cred-marquee-item {
+    font-family: var(--font-display);
+    font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(250,246,237,0.85);
+    padding: 0 2rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .cred-marquee-sep {
+    color: var(--gold);
+    font-size: 0.6rem;
+    flex-shrink: 0;
+    opacity: 0.6;
+  }
+
+  /* ═══════════════════════════════
      SHARED SECTION ELEMENTS
   ═══════════════════════════════ */
+  /* Grain texture overlay for cream sections */
+  .grain-overlay {
+    position: relative;
+  }
+  .grain-overlay::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.5;
+  }
+
+  /* Gold corner architectural accents */
+  .gold-corner-accent {
+    position: absolute;
+    pointer-events: none;
+  }
+  .gold-corner-accent--tl {
+    top: 3rem;
+    left: 2rem;
+    width: 60px;
+    height: 60px;
+    border-top: 1px solid rgba(245,197,24,0.25);
+    border-left: 1px solid rgba(245,197,24,0.25);
+  }
+  .gold-corner-accent--br {
+    bottom: 3rem;
+    right: 2rem;
+    width: 60px;
+    height: 60px;
+    border-bottom: 1px solid rgba(245,197,24,0.25);
+    border-right: 1px solid rgba(245,197,24,0.25);
+  }
+
   .section-eyebrow-line {
     display: block;
     width: 48px;
@@ -1224,12 +1302,8 @@
     max-width: 1200px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 1.25rem;
-  }
-  .services-grid .service-card--full .svc-header {
-    flex-direction: row;
-    align-items: center;
   }
   .service-card {
     background: #FFFFFF;
@@ -1244,7 +1318,7 @@
     box-shadow: 0 8px 32px rgba(0,0,0,0.08);
     transform: translateY(-2px);
   }
-  .service-card--full { grid-column: 1 / -1; }
+  .service-card--full { grid-column: auto; }
 
   /* Left accent stripe */
   .service-card::before {
@@ -1253,7 +1327,7 @@
     left: 0;
     top: 0;
     bottom: 0;
-    width: 3px;
+    width: 4px;
     border-radius: 0 2px 2px 0;
     opacity: 1;
   }
@@ -1280,11 +1354,13 @@
 
   /* Card header */
   .svc-header {
-    padding: 1.75rem 2rem;
+    padding: 1.75rem 1.75rem 1.75rem 2rem;
     display: flex;
     align-items: center;
     gap: 1.25rem;
     user-select: none;
+    position: relative;
+    z-index: 1;
   }
   .svc-num {
     font-family: var(--font-display);
@@ -1430,17 +1506,28 @@
     margin-bottom: 2.5rem;
   }
   .stats-grid {
-    max-width: 1000px;
-    margin: 0 auto;
+    max-width: 900px;
+    margin: 0 auto 3rem;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 2rem;
+    gap: 0;
   }
   .stat-item {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
+    padding: 2rem;
+    position: relative;
+  }
+  .stat-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 20%;
+    bottom: 20%;
+    width: 1px;
+    background: rgba(245,197,24,0.15);
   }
   .stat-number {
     font-family: var(--font-display);
@@ -1496,10 +1583,14 @@
   .steps-connector {
     position: absolute;
     top: 24px;
-    left: 12.5%;
-    width: 75%;
+    left: calc(16.66% + 24px);
+    right: calc(16.66% + 24px);
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(245,197,24,0.3), rgba(245,197,24,0.3), transparent);
+    background: linear-gradient(90deg,
+      rgba(245,197,24,0.5) 0%,
+      rgba(245,197,24,0.2) 50%,
+      rgba(245,197,24,0.5) 100%
+    );
     z-index: 0;
     pointer-events: none;
   }
@@ -1587,14 +1678,11 @@
   /* ═══════════════════════════════
      PART 2 MOBILE
   ═══════════════════════════════ */
-  @media (max-width: 1024px) {
-    .services-grid { grid-template-columns: 1fr 1fr; }
-    .service-card--full { grid-column: 1 / -1; }
-  }
   @media (max-width: 768px) {
     .services-grid { grid-template-columns: 1fr; gap: 0.75rem; }
-    .service-card--full { grid-column: auto; }
-    .stats-grid { grid-template-columns: 1fr 1fr; gap: 2rem 1.5rem; }
+    .stats-grid { grid-template-columns: 1fr 1fr; gap: 0; }
+    .stat-item:nth-child(1),
+    .stat-item:nth-child(2) { border-bottom: 1px solid rgba(245,197,24,0.1); }
     .steps-container { grid-template-columns: 1fr; gap: 2.5rem; }
     .steps-connector { display: none; }
     .step-ghost { display: none; }
@@ -1604,6 +1692,38 @@
     .svc-price { display: none; }
   }
 </style>
+
+<!-- ═══════════════════════════════════════════
+     CREDENCIALES MARQUEE
+═══════════════════════════════════════════ -->
+<div class="cred-marquee" aria-hidden="true">
+  <div class="cred-marquee-track">
+    <span class="cred-marquee-item">Tax Preparer Registrado IRS</span>
+    <span class="cred-marquee-sep">◆</span>
+    <span class="cred-marquee-item">Enrolled Agent Certificado</span>
+    <span class="cred-marquee-sep">◆</span>
+    <span class="cred-marquee-item">Servicio 100% Virtual</span>
+    <span class="cred-marquee-sep">◆</span>
+    <span class="cred-marquee-item">Florida · Todo EE.UU.</span>
+    <span class="cred-marquee-sep">◆</span>
+    <span class="cred-marquee-item">En Español · Paso a Paso</span>
+    <span class="cred-marquee-sep">◆</span>
+    <span class="cred-marquee-item">Respondemos en 2 Horas</span>
+    <span class="cred-marquee-sep">◆</span>
+    <span class="cred-marquee-item">Tax Preparer Registrado IRS</span>
+    <span class="cred-marquee-sep">◆</span>
+    <span class="cred-marquee-item">Enrolled Agent Certificado</span>
+    <span class="cred-marquee-sep">◆</span>
+    <span class="cred-marquee-item">Servicio 100% Virtual</span>
+    <span class="cred-marquee-sep">◆</span>
+    <span class="cred-marquee-item">Florida · Todo EE.UU.</span>
+    <span class="cred-marquee-sep">◆</span>
+    <span class="cred-marquee-item">En Español · Paso a Paso</span>
+    <span class="cred-marquee-sep">◆</span>
+    <span class="cred-marquee-item">Respondemos en 2 Horas</span>
+    <span class="cred-marquee-sep">◆</span>
+  </div>
+</div>
 
 <!-- ═══════════════════════════════════════════
      WAVE — dark → cream
@@ -1617,9 +1737,11 @@
 <!-- ═══════════════════════════════════════════
      SECTION 5 — SERVICIOS
 ═══════════════════════════════════════════ -->
-<section id="servicios" aria-label="Nuestros servicios">
+<section id="servicios" class="grain-overlay" aria-label="Nuestros servicios">
+  <div class="gold-corner-accent gold-corner-accent--tl" aria-hidden="true"></div>
+  <div class="gold-corner-accent gold-corner-accent--br" aria-hidden="true"></div>
 
-  <div class="servicios-header">
+  <div class="servicios-header" style="position:relative;z-index:1">
     <div class="section-eyebrow-line" aria-hidden="true"></div>
     <h2 class="section-headline">
       <span class="hl-display">NUESTROS </span><em class="hl-serif">Servicios</em>
@@ -1627,10 +1749,10 @@
     <p class="section-sub">Cada trámite tiene su proceso. Te explicamos todo en español, desde el principio hasta que tengas tus documentos.</p>
   </div>
 
-  <div class="services-grid">
+  <div class="services-grid" style="position:relative;z-index:1">
 
-    <!-- 01 — CREACIÓN DE EMPRESA (full width, gold) -->
-    <div class="service-card service-card--full accent-gold reveal"
+    <!-- 01 — CREACIÓN DE EMPRESA (gold) -->
+    <div class="service-card accent-gold reveal"
          role="button" tabindex="0" aria-expanded="false" data-num="01">
       <div class="svc-header">
         <span class="svc-num">01</span>
@@ -1885,8 +2007,8 @@
 <!-- ═══════════════════════════════════════════
      SECTION 7 — PROCESO
 ═══════════════════════════════════════════ -->
-<section id="proceso" aria-label="Cómo funciona">
-  <div class="proceso-inner">
+<section id="proceso" class="grain-overlay" aria-label="Cómo funciona">
+  <div class="proceso-inner" style="position:relative;z-index:1">
 
     <div class="proceso-header">
       <div class="section-eyebrow-line" aria-hidden="true"></div>
@@ -2695,8 +2817,8 @@
 <!-- ═══════════════════════════════════════════
      SECTION 9 — FAQ
 ═══════════════════════════════════════════ -->
-<section id="faq" aria-label="Preguntas frecuentes">
-  <div class="faq-inner">
+<section id="faq" class="grain-overlay" aria-label="Preguntas frecuentes">
+  <div class="faq-inner" style="position:relative;z-index:1">
 
     <div class="faq-header">
       <div class="section-eyebrow-line" aria-hidden="true"></div>
